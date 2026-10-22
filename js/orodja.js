@@ -237,10 +237,13 @@
       box.dataset.i = di;
       box.innerHTML = '<span class="dk">' + T("Predlog dneva", "Dish of the day") + '</span><span class="dic">' + ico(r[0]) + "</span><b>" + esc(en ? r[2] : r[1]) + '</b><span class="dm">' + mins(r[3]) + " · " + tezName(r[4]) + " · " + r[6].length + T(" sestavin", " ingredients") + '</span><span class="dgo">' + T("Poglej recept", "View recipe") + " →</span>";
     }
-    document.querySelectorAll(".dtrak").forEach(function (t, k) {
-      var ids = REC.jedi.map(function (r, i) { return i; }).filter(function (i) { return i % 2 === k % 2; }).slice(0, 40), out = $("rmodal") ? "button" : "a";
+    var traks = document.querySelectorAll(".dtrak"), nT = traks.length;
+    traks.forEach(function (t, k) {
+      var ids = REC.jedi.map(function (r, i) { return i; }).filter(function (i) { return i % nT === k; }), out = $("rmodal") ? "button" : "a";
       var row = ids.map(function (i) { var r = REC.jedi[i]; return "<" + out + (out === "a" ? ' href="recepti.html#r=' + i + '"' : ' type="button"') + ' data-r="' + i + '">' + ico(r[0]) + esc(en ? r[2] : r[1]) + "</" + out + ">"; }).join("");
       t.innerHTML = '<div class="row">' + row + row + "</div>";
+      // počasi: okoli 18 px na sekundo, ne glede na dolžino traku
+      var w = t.firstChild.scrollWidth / 2; if (w) t.firstChild.style.animationDuration = Math.round(w / (k === 1 ? 15 : 18)) + "s";
     });
   }
   document.addEventListener("click", function (e) {
