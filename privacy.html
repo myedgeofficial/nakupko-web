@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Nakupko – Privacy</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" href="img/ikona.svg" type="image/svg+xml">
+  <style>
+    :root { --ink: #1b1b1f; --muted: #6b6b76; --accent: #8A3FFC; --bg: #fff; }
+    @media (prefers-color-scheme: dark) { :root { --ink: #f2f1f7; --muted: #a5a3b3; --accent: #b388ff; --bg: #131218; } }
+    body { margin: 0 auto; max-width: 680px; padding: calc(20px + env(safe-area-inset-top)) 20px 40px; font: 16px/1.55 -apple-system, system-ui, sans-serif; color: var(--ink); background: var(--bg); }
+    h1 { font-size: 26px; margin: 0 0 12px; }
+    h2 { font-size: 17px; margin: 24px 0 6px; }
+    a { color: var(--accent); }
+    .muted { color: var(--muted); font-size: 14px; }
+    .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; font-size: 14px; }
+    .top a.home { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 17px; color: var(--ink); text-decoration: none; }
+    .top img { width: 28px; height: 28px; border-radius: 7px; }
+  </style>
+</head>
+<body>
+  <div class="top"><a class="home" href="./?lang=en"><img src="img/ikona-512.png" alt="">Nakupko</a><a href="zasebnost.html" lang="sl">Slovenščina</a></div>
+  <h1>Privacy</h1>
+  <p class="muted">Applies to the Nakupko app (iPhone, Android and web). Last updated: 22 October 2026.</p>
+  <p>Nakupko has no user accounts. We do not sell data.</p>
+
+  <h2>List and habits</h2>
+  <p>Your shopping list, purchase history and settings are stored on your phone.</p>
+
+  <h2>Location</h2>
+  <p>The app uses location only to detect nearby stores, so your list opens when you arrive at a store. With the »Always« (»Allow all the time« on Android) permission this also works when the app is closed. To find stores around you, your approximate location is sent to OpenStreetMap (Overpass API). We do not store your location history.</p>
+
+  <h2>List on the lock screen</h2>
+  <p>When you arrive at a store, Nakupko can show your list on the lock screen. On iPhone, the store name, open list items and Apple's notification token are briefly sent to our server (Google Firebase, EU), which triggers the display through Apple. The record is deleted right after sending.</p>
+
+  <h2>Shared list</h2>
+  <p>If you create or join a shared list, its items, the name you enter, your notification token and the store you are currently in are stored in Google Firebase (EU) under a random household code. Only phones that know this code can see them, so other members can be notified when someone is in a store. When you leave a shared list your phone is removed; to delete all household data, write to us.</p>
+
+  <h2>Counting users</h2>
+  <p>Once a day the app sends a random device number, the device type (iPhone, Android or web) and whether you have Nakupko Plus to Google Firebase (EU). This tells us how many people use Nakupko. The number is not linked to you, your location or your list; records are deleted after 60 days.</p>
+
+  <h2>Cheapest store</h2>
+  <p>The app does not show prices. It downloads a public price file only to roughly estimate where shopping would be cheapest. Your list is not sent.</p>
+  <p><b>The cheapest store is only a rough estimate.</b> Prices are collected once a day from public sources and may differ from those in the store. The price in the store applies. We have no insight into stock. Opening hours are for information only. Nakupko accepts no liability for differences.</p>
+
+  <h2>Ads</h2>
+  <p>The free version of the app shows Google AdMob ads. To show ads, Google uses device data, the advertising ID, IP address and interactions with ads. In the EU the app asks for your consent on first launch, which you can change at any time. More: <a href="https://policies.google.com/technologies/ads">Google's advertising policies</a>. Nakupko Plus has no ads.</p>
+
+  <h2>Subscription</h2>
+  <p>The Nakupko Plus subscription is handled entirely by Apple (App Store) or Google (Google Play). We never see payment details. On iPhone, cancel it in Settings → your name → Subscriptions; on Android in Google Play → Profile → Payments and subscriptions.</p>
+
+  <h2>Children</h2>
+  <p>Nakupko is not intended for children under 13 and does not knowingly collect their data.</p>
+
+  <h2>Data controller</h2>
+  <p>REMAKO d.o.o., Ljubljanska cesta 63, 2327 Rače, Slovenia<br>VAT ID: SI45736901</p>
+
+  <h2>Contact</h2>
+  <p>Questions and deletion requests: <a href="mailto:support@remako.si">support@remako.si</a> or the <a href="support.html">support page</a>.</p>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Nakupko – nakupovalni seznam, ki se sam odpre v trgovini</title>
+  <meta name="description" content="Nakupko je preprost nakupovalni seznam. Ko stopiš v trgovino, se seznam odpre sam. En seznam za vse doma.">
+  <link rel="icon" href="img/ikona.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <meta property="og:title" content="Nakupko">
+  <meta property="og:description" content="Nakupovalni seznam, ki se sam odpre, ko stopiš v trgovino.">
+  <meta property="og:image" content="https://nakupko.com/img/ikona-512.png">
+  <meta name="apple-itunes-app" content="app-id=6818745132">
+  <style>
+    :root { --ink: #1b1b1f; --muted: #6b6b76; --accent: #8A3FFC; --soft: #f4f0ff; --line: #e9e6f2; --bg: #fff; }
+    @media (prefers-color-scheme: dark) {
+      :root { --ink: #f2f1f7; --muted: #a5a3b3; --accent: #b388ff; --soft: #221d30; --line: #2d2a38; --bg: #131218; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.55 -apple-system, system-ui, "Segoe UI", Roboto, sans-serif; }
+    a { color: var(--accent); }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+    header { display: flex; align-items: center; justify-content: space-between; padding: calc(16px + env(safe-area-inset-top)) 0 8px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; color: var(--ink); text-decoration: none; }
+    .brand img { width: 36px; height: 36px; border-radius: 9px; }
+    .lang { display: flex; gap: 4px; }
+    .lang button { font: inherit; font-size: 14px; border: 1px solid var(--line); background: none; color: var(--muted); padding: 4px 10px; border-radius: 999px; cursor: pointer; }
+    .lang button[aria-pressed="true"] { color: var(--ink); border-color: var(--accent); }
+    .hero { text-align: center; padding: 48px 0 32px; }
+    .hero img.icon { width: 96px; height: 96px; border-radius: 22px; box-shadow: 0 8px 28px rgba(138, 63, 252, .25); }
+    h1 { font-size: clamp(30px, 6vw, 46px); line-height: 1.15; margin: 20px auto 12px; max-width: 760px; letter-spacing: -.01em; }
+    .lead { color: var(--muted); font-size: 19px; max-width: 600px; margin: 0 auto 28px; }
+    .stores { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .store { display: inline-flex; align-items: center; gap: 10px; min-width: 190px; padding: 10px 18px; border-radius: 12px; background: var(--ink); color: var(--bg); text-decoration: none; text-align: left; }
+    .store svg { width: 26px; height: 26px; flex: none; fill: currentColor; }
+    .store small { display: block; font-size: 11px; opacity: .8; line-height: 1.2; }
+    .store b { display: block; font-size: 18px; line-height: 1.2; font-weight: 600; }
+    .shots { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 24px 20px 32px; margin: 0 -20px; justify-content: safe center; }
+    .shots img { flex: none; width: 230px; aspect-ratio: 9 / 16; border-radius: 20px; scroll-snap-align: center; border: 1px solid var(--line); background: var(--soft); }
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; padding: 16px 0 48px; }
+    .f { background: var(--soft); border-radius: 16px; padding: 20px; }
+    .f h2 { font-size: 18px; margin: 0 0 6px; }
+    .f p { margin: 0; color: var(--muted); font-size: 16px; }
+    footer { border-top: 1px solid var(--line); padding: 24px 0 calc(32px + env(safe-area-inset-bottom)); color: var(--muted); font-size: 14px; }
+    footer nav { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="./"><img src="img/ikona-512.png" alt="">Nakupko</a>
+      <div class="lang" role="group" aria-label="Jezik / Language">
+        <button type="button" data-set="sl">SL</button>
+        <button type="button" data-set="en">EN</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <img class="icon" src="img/ikona-512.png" alt="Nakupko">
+      <h1 data-t="h1">Nakupovalni seznam, ki se sam odpre v trgovini</h1>
+      <p class="lead" data-t="lead">Napiši, kaj rabiš. Ko stopiš v trgovino, Nakupko to zazna in ti pokaže seznam. Brez iskanja, brez pozabljanja.</p>
+      <div class="stores">
+        <a class="store" href="https://apps.apple.com/si/app/nakupko/id6818745132">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.37 12.77c-.02-2.22 1.82-3.29 1.9-3.34-1.04-1.52-2.65-1.72-3.22-1.75-1.37-.14-2.68.81-3.37.81-.7 0-1.77-.79-2.91-.77-1.5.02-2.88.87-3.65 2.21-1.56 2.7-.4 6.69 1.12 8.88.74 1.07 1.62 2.27 2.78 2.23 1.12-.05 1.54-.72 2.89-.72 1.35 0 1.73.72 2.91.7 1.2-.02 1.96-1.09 2.69-2.17.85-1.24 1.2-2.44 1.22-2.5-.03-.01-2.33-.9-2.36-3.58zM14.15 6.25c.61-.75 1.03-1.78.92-2.81-.88.04-1.96.59-2.6 1.33-.56.65-1.06 1.71-.93 2.71.99.08 2-.5 2.61-1.23z"/></svg>
+          <span><small data-t="as1">Prenesi v</small><b>App Store</b></span>
+        </a>
+        <a class="store" href="https://play.google.com/store/apps/details?id=si.nakupko.app">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 2.3c-.2.2-.3.6-.3 1v17.4c0 .4.1.8.3 1l9.7-9.7L3.6 2.3zm10.8 10.8 2.6 2.6-11.9 6.8c-.3.2-.7.2-.9.1l10.2-9.5zm3.9-3.9 2.9 1.6c.9.5.9 1.8 0 2.3l-2.9 1.7-2.8-2.8 2.8-2.8zM4.1 1.4c.3-.1.6 0 .9.1l11.9 6.8-2.6 2.6L4.1 1.4z"/></svg>
+          <span><small data-t="gp1">Na voljo v</small><b>Google Play</b></span>
+        </a>
+      </div>
+    </section>
+
+    <div class="shots" aria-label="Posnetki zaslona">
+      <img data-shot="1" src="img/sl-1.webp" alt="" loading="lazy">
+      <img data-shot="2" src="img/sl-2.webp" alt="" loading="lazy">
+      <img data-shot="3" src="img/sl-3.webp" alt="" loading="lazy">
+      <img data-shot="4" src="img/sl-4.webp" alt="" loading="lazy">
+    </div>
+
+    <section class="features">
+      <div class="f"><h2 data-t="f1h">Seznam se odpre sam</h2><p data-t="f1p">Nakupko prepozna trgovino, v katero stopiš, in ti takoj pokaže, kaj še manjka.</p></div>
+      <div class="f"><h2 data-t="f2h">En seznam za vse doma</h2><p data-t="f2p">Deli seznam z družino. Ko je kdo v trgovini, ostali vidijo in lahko še kaj dodajo.</p></div>
+      <div class="f"><h2 data-t="f3h">Uči se tvojih navad</h2><p data-t="f3p">Opomni te na stvari, ki jih običajno kupiš, da ne pozabiš mleka ali kruha.</p></div>
+      <div class="f"><h2 data-t="f4h">Preprost in jasen</h2><p data-t="f4p">Izdelki se sami razvrstijo po oddelkih. Brez računa, seznam ostane na tvojem telefonu.</p></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <nav>
+        <a data-href="podpora" href="podpora.html" data-t="sup">Podpora</a>
+        <a data-href="zasebnost" href="zasebnost.html" data-t="priv">Zasebnost</a>
+        <a href="mailto:support@remako.si">support@remako.si</a>
+      </nav>
+      <div>© 2026 <a href="https://remako.si">REMAKO d.o.o.</a></div>
+    </div>
+  </footer>
+
+  <script>
+    var EN = {
+      h1: "The shopping list that opens by itself in the store",
+      lead: "Write down what you need. When you walk into a store, Nakupko notices and shows your list. No searching, no forgetting.",
+      as1: "Download on the", gp1: "Get it on",
+      f1h: "Opens by itself", f1p: "Nakupko recognises the store you walk into and instantly shows what you still need.",
+      f2h: "One list for the whole home", f2p: "Share the list with your family. When someone is in a store, the others see it and can add more.",
+      f3h: "Learns your habits", f3p: "Reminds you of things you usually buy, so you never forget milk or bread.",
+      f4h: "Simple and clear", f4p: "Items sort themselves by aisle. No account, your list stays on your phone.",
+      sup: "Support", priv: "Privacy"
+    };
+    var SL = {};
+    document.querySelectorAll("[data-t]").forEach(function (el) { SL[el.dataset.t] = el.textContent; });
+    function setLang(l) {
+      var d = l === "en" ? EN : SL;
+      document.documentElement.lang = l;
+      document.querySelectorAll("[data-t]").forEach(function (el) { el.textContent = d[el.dataset.t]; });
+      document.querySelectorAll("[data-shot]").forEach(function (el) { el.src = "img/" + l + "-" + el.dataset.shot + ".webp"; });
+      document.querySelector('[data-href="podpora"]').href = l === "en" ? "support.html" : "podpora.html";
+      document.querySelector('[data-href="zasebnost"]').href = l === "en" ? "privacy.html" : "zasebnost.html";
+      document.querySelectorAll("[data-set]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.set === l)); });
+      try { localStorage.setItem("lang", l); } catch (e) { /* nič */ }
+    }
+    var saved = null;
+    try { saved = localStorage.getItem("lang"); } catch (e) { /* nič */ }
+    var q = new URLSearchParams(location.search).get("lang");
+    setLang(q || saved || ((navigator.language || "sl").slice(0, 2) === "sl" ? "sl" : "en"));
+    document.querySelectorAll("[data-set]").forEach(function (b) { b.onclick = function () { setLang(b.dataset.set); }; });
+  </script>
+</body>
+</html>
