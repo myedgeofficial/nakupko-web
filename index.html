@@ -155,6 +155,79 @@
     .ticker .row span::before { content: "◆"; color: var(--v); margin-right: 52px; font-size: .6em; vertical-align: middle; }
     @keyframes run { to { transform: translateX(-50%); } }
 
+    /* orodja */
+    #orodja { padding-top: clamp(64px, 10vh, 120px); }
+    .tool-tabs { display: inline-flex; gap: 6px; padding: 6px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.03); margin: 8px 0 26px; }
+    .tool-tabs button { font: 800 15px "Inter Tight", sans-serif; color: var(--muted); background: none; border: 0; padding: 10px 20px; border-radius: 999px; cursor: pointer; transition: background .2s, color .2s; }
+    .tool-tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+    .tool { display: grid; grid-template-columns: 1.2fr .8fr; gap: 20px; }
+    .tool[hidden] { display: none; }
+    @media (max-width: 900px) { .tool { grid-template-columns: 1fr; } }
+    .panel { background: #f5f3fb; color: #17132a; border-radius: 28px; padding: clamp(18px, 2.4vw, 30px); box-shadow: 0 40px 80px -40px rgba(91, 52, 190, .55); min-height: 420px; }
+    .side { border: 1px solid var(--line); border-radius: 28px; padding: clamp(20px, 2.4vw, 32px); background: rgba(255,255,255,.02); }
+    .side h3 { margin: 0 0 6px; font-size: 22px; font-weight: 900; letter-spacing: -.02em; }
+    .side p { margin: 0 0 18px; color: var(--muted); font-size: 16px; }
+    .rec { display: flex; flex-wrap: wrap; gap: 8px; }
+    .rec button { font: 800 14px "Inter Tight", sans-serif; color: var(--ink); background: rgba(255,255,255,.05); border: 1px solid var(--line); padding: 9px 14px; border-radius: 999px; cursor: pointer; transition: border-color .2s, transform .2s, background .2s; }
+    .rec button:hover { border-color: rgba(167, 139, 250, .6); transform: translateY(-2px); background: rgba(139, 92, 246, .14); }
+    .wl-top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+    .wl-top b { font-size: 30px; font-weight: 900; letter-spacing: -.03em; }
+    .wl-top span { color: #6b6585; font-weight: 700; font-size: 15px; }
+    .wl-add { position: relative; display: flex; gap: 8px; background: #fff; border-radius: 18px; padding: 8px 8px 8px 16px; box-shadow: 0 2px 10px rgba(40, 20, 90, .06); }
+    .wl-add input { flex: 1; min-width: 0; border: 0; outline: 0; font: 600 17px "Inter Tight", sans-serif; color: #17132a; background: none; }
+    .wl-add button { border: 0; border-radius: 13px; width: 44px; height: 44px; background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff; font-size: 26px; cursor: pointer; flex: none; }
+    .sugg { position: absolute; left: 0; right: 0; top: calc(100% + 6px); background: #fff; border-radius: 16px; box-shadow: 0 20px 40px rgba(30, 10, 70, .2); z-index: 5; overflow: hidden; }
+    .sugg[hidden] { display: none; }
+    .sugg button { display: flex; width: 100%; align-items: center; gap: 12px; border: 0; background: none; padding: 10px 14px; font: 700 16px "Inter Tight", sans-serif; color: #17132a; cursor: pointer; text-align: left; }
+    .sugg button:hover, .sugg button.act { background: #f1ebff; }
+    .sugg img, .wrow img { width: 30px; height: 30px; padding: 4px; border-radius: 9px; background: #f3effc; flex: none; }
+    .sugg small { margin-left: auto; color: #8d87a3; font-weight: 600; font-size: 13px; }
+    .wl-list { margin-top: 16px; }
+    .wcat { font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #8b5cf6; margin: 14px 4px 6px; }
+    .wgrp { background: #fff; border-radius: 18px; padding: 2px 14px; box-shadow: 0 2px 10px rgba(40, 20, 90, .05); }
+    .wrow { display: flex; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px solid #f0edf7; font-weight: 800; font-size: 16px; animation: pop .35s ease-out; }
+    .wrow:last-child { border-bottom: 0; }
+    @keyframes pop { from { opacity: 0; transform: translateY(-6px); } }
+    .wrow .nm { flex: 1; cursor: pointer; }
+    .wrow.done .nm { text-decoration: line-through; text-decoration-color: #8b5cf6; opacity: .45; }
+    .wrow .ck { width: 26px; height: 26px; border-radius: 50%; border: 2px solid #cfc9de; background: none; cursor: pointer; flex: none; display: grid; place-items: center; transition: background .2s, border-color .2s; }
+    .wrow.done .ck { background: #8b5cf6; border-color: #8b5cf6; }
+    .wrow.done .ck::after { content: ""; width: 10px; height: 5px; border: solid #fff; border-width: 0 0 2px 2px; transform: rotate(-45deg) translate(1px, -1px); }
+    .wrow .x { border: 0; background: none; color: #b3adc6; font-size: 20px; cursor: pointer; padding: 0 4px; }
+    .empty { text-align: center; color: #8d87a3; padding: 50px 10px 30px; font-weight: 700; }
+    .empty i { display: block; font-style: normal; font-size: 40px; margin-bottom: 8px; }
+    .acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .acts button, .acts a { font: 800 14px "Inter Tight", sans-serif; border-radius: 999px; padding: 10px 16px; cursor: pointer; text-decoration: none; border: 1px solid #ddd6ee; background: #fff; color: #17132a; }
+    .acts .pri { background: #17132a; color: #fff; border-color: #17132a; }
+    .toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 140%); background: var(--ink); color: var(--bg); font-weight: 800; padding: 12px 20px; border-radius: 999px; z-index: 80; transition: transform .35s; }
+    .toast.on { transform: translate(-50%, 0); }
+    .near-btn { display: inline-flex; align-items: center; gap: 10px; font: 800 17px "Inter Tight", sans-serif; background: linear-gradient(95deg, #8b5cf6, #ec4899); color: #fff; border: 0; padding: 15px 24px; border-radius: 999px; cursor: pointer; box-shadow: 0 16px 40px -14px rgba(236, 72, 153, .7); }
+    .near-btn:disabled { opacity: .6; }
+    .stores-list { display: grid; gap: 10px; margin-top: 4px; }
+    .srow { display: flex; align-items: center; gap: 14px; background: #fff; border-radius: 18px; padding: 12px 14px; box-shadow: 0 2px 10px rgba(40, 20, 90, .05); animation: pop .4s ease-out both; }
+    .srow .lg { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; color: #fff; font-weight: 900; font-size: 13px; letter-spacing: -.01em; flex: none; }
+    .srow .inf { flex: 1; min-width: 0; }
+    .srow .inf b { display: block; font-size: 17px; }
+    .srow .inf span { display: block; font-size: 14px; color: #6b6585; font-weight: 600; }
+    .srow .st { font-weight: 800; }
+    .srow .st.o { color: #15803d; } .srow .st.c { color: #b91c1c; }
+    .srow a { font: 800 13px "Inter Tight", sans-serif; color: #6d28d9; background: #f1ebff; padding: 8px 12px; border-radius: 999px; text-decoration: none; white-space: nowrap; }
+    .cheap { display: flex; gap: 14px; align-items: center; margin-top: 14px; padding: 12px 14px; border-radius: 18px; background: linear-gradient(95deg, #efe7ff, #fde7f3); animation: pop .4s ease-out; }
+    .cheap[hidden] { display: none; }
+    .cheap .lg, .srow .lg { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; color: #fff; font-weight: 900; font-size: 22px; flex: none; }
+    .cheap b { display: block; font-size: 17px; }
+    .cheap span:not(.lg) { display: block; font-size: 13px; color: #6b6585; font-weight: 600; line-height: 1.35; }
+    .today { background: #fff; border-radius: 18px; padding: 16px 18px; box-shadow: 0 2px 10px rgba(40, 20, 90, .05); margin-bottom: 14px; }
+    .today > b { display: block; font-size: 19px; font-weight: 900; }
+    .today > b.to { color: #15803d; } .today > b.tc { color: #b91c1c; }
+    .today > span { display: block; color: #6b6585; font-size: 15px; margin-top: 2px; }
+    .hol { margin-top: 12px; padding-top: 12px; border-top: 1px solid #f0edf7; }
+    .hol small { display: block; font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #8b5cf6; margin-bottom: 6px; }
+    .hol div { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; padding: 3px 0; }
+    .hol div span { color: #6b6585; font-weight: 600; }
+    .hol div b { text-align: right; }
+    .note { font-size: 13px; color: #8d87a3; margin-top: 14px; font-weight: 600; }
+
     /* kako deluje */
     .steps { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); margin-top: 48px; }
     .step { padding: clamp(24px, 2.6vw, 40px); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); position: relative; overflow: hidden; transition: background .3s; }
@@ -230,6 +303,7 @@
     <div class="wrap">
       <a class="brand" href="./"><img src="img/ikona-512.png" alt="">Nakupko<small>by REMAKO</small></a>
       <nav>
+        <a class="opt" href="#orodja"><span data-sl>Moj seznam</span><span data-en>My list</span></a>
         <a class="opt" href="#kako"><span data-sl>Kako deluje</span><span data-en>How it works</span></a>
         <a class="opt" href="#funkcije"><span data-sl>Funkcije</span><span data-en>Features</span></a>
         <a class="opt" data-sl href="podpora.html">Podpora</a><a class="opt" data-en href="support.html">Support</a>
@@ -293,6 +367,60 @@
   </section>
 
   <div class="ticker" aria-hidden="true"><div class="row" id="tick"></div></div>
+
+
+  <section id="orodja">
+    <div class="wrap">
+      <p class="eyebrow rv"><span data-sl>Preizkusi kar tukaj</span><span data-en>Try it right here</span></p>
+      <h2 class="h rv"><span data-sl>Uporabno že<br><span class="grad">v brskalniku.</span></span><span data-en>Useful right<br><span class="grad">in your browser.</span></span></h2>
+      <div class="tool-tabs rv" role="tablist">
+        <button type="button" role="tab" aria-selected="true" data-tool="tList"><span data-sl>🛒 Moj seznam</span><span data-en>🛒 My list</span></button>
+        <button type="button" role="tab" aria-selected="false" data-tool="tNear"><span data-sl>📍 Odprte trgovine</span><span data-en>📍 Open stores</span></button>
+      </div>
+
+      <div class="tool rv" id="tList">
+        <div class="panel">
+          <div class="wl-top"><b id="wlCount">0</b><span><span data-sl>za kupiti</span><span data-en>to buy</span></span></div>
+          <form class="wl-add" id="wlForm" autocomplete="off">
+            <input id="wlIn" type="text" enterkeyhint="done" aria-label="Izdelek">
+            <button type="submit" aria-label="Dodaj">+</button>
+            <div class="sugg" id="sugg" hidden></div>
+          </form>
+          <div class="cheap" id="cheap" hidden></div>
+          <div class="wl-list" id="wlList"></div>
+          <div class="acts" id="wlActs" hidden>
+            <button type="button" class="pri" id="wlShare"><span data-sl>📤 Pošlji na telefon</span><span data-en>📤 Send to phone</span></button>
+            <a id="wlWa" target="_blank" rel="noopener">WhatsApp</a>
+            <button type="button" id="wlCopy"><span data-sl>Kopiraj</span><span data-en>Copy</span></button>
+            <button type="button" id="wlDone"><span data-sl>Pobriši kupljeno</span><span data-en>Clear bought</span></button>
+            <button type="button" id="wlClear"><span data-sl>Pobriši vse</span><span data-en>Clear all</span></button>
+          </div>
+        </div>
+        <div class="side">
+          <h3 data-sl>Kaj boš kuhal?</h3><h3 data-en>What's cooking?</h3>
+          <p data-sl>Klikni jed in sestavine se dodajo na seznam.</p><p data-en>Tap a dish and its ingredients go on your list.</p>
+          <div class="rec" id="rec"></div>
+          <p style="margin:26px 0 0" data-sl>Seznam ostane shranjen v tem brskalniku. Z »Pošlji na telefon« ga odpreš kjerkoli, v aplikaciji Nakupko pa se še sam odpre, ko stopiš v trgovino.</p>
+          <p style="margin:26px 0 0" data-en>Your list stays saved in this browser. »Send to phone« opens it anywhere, and in the Nakupko app it even opens by itself when you walk into a store.</p>
+        </div>
+      </div>
+
+      <div class="tool" id="tNear" hidden>
+        <div class="panel">
+          <div class="today" id="todayBox"></div>
+          <div id="nearBox" class="empty"><i>📍</i><span data-sl>Poišči najbližje trgovine in preveri, ali so zdaj odprte.</span><span data-en>Find the nearest stores and check whether they're open now.</span><br><br>
+            <button type="button" class="near-btn" id="nearBtn"><span data-sl>Pokaži trgovine v bližini</span><span data-en>Show stores near me</span></button></div>
+          <div class="stores-list" id="nearList"></div>
+          <p class="note" id="nearNote" hidden><span data-sl>Delovni časi so informativni. Ob praznikih so trgovine lahko zaprte.</span><span data-en>Opening hours are for information only. Stores may be closed on public holidays.</span></p>
+        </div>
+        <div class="side">
+          <h3 data-sl>Mercator, Spar, Tuš, Lidl, Eurospin</h3><h3 data-en>Mercator, Spar, Tuš, Lidl, Eurospin</h3>
+          <p data-sl>Skoraj 1000 trgovin po Sloveniji z delovnimi časi, ki jih osvežujemo vsak dan.</p><p data-en>Almost 1,000 stores across Slovenia with opening hours refreshed every day.</p>
+          <p data-sl>Tvoja lokacija ostane v brskalniku in se nikamor ne pošlje.</p><p data-en>Your location stays in your browser and is never sent anywhere.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section id="kako">
     <div class="wrap">
@@ -365,6 +493,7 @@
       <div>© 2026 <a href="https://remako.si">REMAKO d.o.o.</a></div>
     </div>
   </footer>
+  <div class="toast" id="toast"></div>
 
   <script>
   (function () {
@@ -520,6 +649,265 @@
       at(18200, loop);
     }
     loop();
+  })();
+  </script>
+  <script>
+  (function () {
+    var root = document.documentElement;
+    var L = function () { return root.lang === "en" ? "en" : "sl"; };
+    var T = function (sl, en) { return L() === "en" ? en : sl; };
+    var $ = function (id) { return document.getElementById(id); };
+    var norm = function (s) { return String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, " ").trim(); };
+    var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+    var LIVE = "https://myedgeofficial.github.io/nakupko/";
+    var CHAINS = { mercator: ["Mercator", "#e30613"], spar: ["Spar", "#00843d"], tus: ["Tuš", "#0055a5"], lidl: ["Lidl", "#0050aa"], eurospin: ["Eurospin", "#1d3c8f"], hofer: ["Hofer", "#00a0e2"], jager: ["Jager", "#c8102e"] };
+    function toast(msg) { var t = $("toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(function () { t.classList.remove("on"); }, 2200); }
+    function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || "null"); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
+
+    // zavihki
+    document.querySelectorAll("[data-tool]").forEach(function (b) {
+      b.onclick = function () {
+        document.querySelectorAll("[data-tool]").forEach(function (x) { x.setAttribute("aria-selected", String(x === b)); $(x.dataset.tool).hidden = x !== b; });
+        $(b.dataset.tool).classList.add("in");
+      };
+    });
+
+    // ---------- seznam ----------
+    var CAT = [], BY = {}, CATS = [];
+    var CAT_EN = { "Sadje in zelenjava": "Fruit & veg", "Mlečni izdelki": "Dairy", "Meso in ribe": "Meat & fish", "Kruh in pecivo": "Bakery", "Shramba": "Pantry", "Pijače": "Drinks", "Prigrizki": "Snacks", "Zamrznjeno": "Frozen", "Gospodinjstvo": "Household", "Higiena": "Hygiene", "Brez glutena": "Gluten free", "Ljubljenčki": "Pets", "Otroci": "Kids", "Zdravje": "Health", "Športna prehrana": "Sports nutrition", "Dom in vrt": "Home & garden", "Drugo": "Other" };
+    var RECIPES = [
+      ["🥞", "Palačinke", "Pancakes", ["Moka bela", "Mleko", "Jajca", "Sladkor", "Olje sončnično", "Marmelada", "Lešnikov namaz"]],
+      ["🍝", "Špageti bolonjez", "Spaghetti bolognese", ["Testenine špageti", "Mleto meso", "Čebula", "Česen", "Korenje", "Paradižnikova omaka (pasata)", "Parmezan"]],
+      ["🍕", "Domača pica", "Homemade pizza", ["Testo za pico", "Paradižnikova mezga", "Mozzarella", "Šunka", "Origano", "Olje sončnično"]],
+      ["🔥", "Žar", "Barbecue", ["Čevapčiči", "Lepinje", "Ajvar", "Čebula", "Solata ledenka", "Oglje za žar", "Pivo"]],
+      ["🍳", "Zajtrk", "Breakfast", ["Kruh beli", "Maslo", "Marmelada", "Jajca", "Jogurt navadni", "Banane", "Kava mleta"]],
+      ["🍚", "Rižota s piščancem", "Chicken risotto", ["Riž", "Piščančji file", "Čebula", "Bučke", "Smetana za kuhanje", "Parmezan"]]
+    ];
+    var list = store("nk-web-list") || [];
+    function save() { store("nk-web-list", list); }
+    function find(name) { return BY[norm(name)]; }
+    function add(name, quiet) {
+      name = String(name || "").trim(); if (!name) return false;
+      var p = find(name), key = norm(p ? p[0] : name);
+      if (list.some(function (x) { return norm(x.n) === key; })) { if (!quiet) toast(T("Že na seznamu", "Already on the list")); return false; }
+      list.push({ n: p ? p[0] : name.charAt(0).toUpperCase() + name.slice(1), d: false }); save(); return true;
+    }
+    function nameOf(n) { var p = find(n); return L() === "en" && p ? p[1] : n; }
+    function icon(n) { var p = find(n); return "img/i/" + (p ? p[3] : "shopping-cart") + ".svg"; }
+    function render() {
+      var open = list.filter(function (x) { return !x.d; }).length;
+      $("wlCount").textContent = open;
+      $("wlIn").placeholder = T("Kaj moraš kupiti? npr. mleko", "What do you need? e.g. milk");
+      $("wlActs").hidden = !list.length;
+      if (!list.length) { $("wlList").innerHTML = '<div class="empty"><i>🧺</i>' + T("Seznam je prazen. Dodaj izdelek ali izberi jed.", "Your list is empty. Add an item or pick a dish.") + "</div>"; cheap(); return; }
+      var groups = {};
+      list.forEach(function (x, i) { var p = find(x.n), c = p ? p[2] : "Drugo"; (groups[c] = groups[c] || []).push(i); });
+      var order = CATS.concat(["Drugo"]).filter(function (c) { return groups[c]; });
+      $("wlList").innerHTML = order.map(function (c) {
+        return '<div class="wcat">' + esc(L() === "en" ? (CAT_EN[c] || c) : c) + '</div><div class="wgrp">' + groups[c].map(function (i) {
+          var x = list[i];
+          return '<div class="wrow' + (x.d ? " done" : "") + '" data-i="' + i + '"><img src="' + icon(x.n) + '" alt=""><span class="nm">' + esc(nameOf(x.n)) + '</span><button class="ck" type="button" aria-label="' + T("Kupljeno", "Bought") + '"></button><button class="x" type="button" aria-label="' + T("Odstrani", "Remove") + '">×</button></div>';
+        }).join("") + "</div>";
+      }).join("");
+      $("wlWa").href = "https://wa.me/?text=" + encodeURIComponent(text());
+      cheap();
+    }
+    $("wlList").onclick = function (e) {
+      var r = e.target.closest(".wrow"); if (!r) return; var i = +r.dataset.i;
+      if (e.target.classList.contains("x")) list.splice(i, 1); else list[i].d = !list[i].d;
+      save(); render();
+    };
+    function link() { return "https://nakupko.com/#s=" + encodeURIComponent(list.filter(function (x) { return !x.d; }).map(function (x) { return x.n; }).join("|")); }
+    function text() {
+      return T("🛒 Nakupovalni seznam:", "🛒 Shopping list:") + "\n" + list.filter(function (x) { return !x.d; }).map(function (x) { return "• " + nameOf(x.n); }).join("\n") + "\n\n" + T("Odpri seznam: ", "Open the list: ") + link();
+    }
+    $("wlShare").onclick = function () {
+      if (navigator.share) navigator.share({ title: "Nakupko", text: text() }).catch(function () {});
+      else copy(link());
+    };
+    function copy(s) { (navigator.clipboard ? navigator.clipboard.writeText(s) : Promise.reject()).then(function () { toast(T("Kopirano ✓", "Copied ✓")); }, function () { prompt("", s); }); }
+    $("wlCopy").onclick = function () { copy(text()); };
+    $("wlDone").onclick = function () { list = list.filter(function (x) { return !x.d; }); save(); render(); };
+    $("wlClear").onclick = function () { if (confirm(T("Pobrišem cel seznam?", "Clear the whole list?"))) { list = []; save(); render(); } };
+
+    // predlogi
+    var sel = -1, hits = [];
+    function suggest() {
+      var q = norm($("wlIn").value), box = $("sugg"); sel = -1;
+      if (q.length < 1) { box.hidden = true; return; }
+      hits = CAT.filter(function (p) { return p.k.indexOf(q) === 0 || p.ke.indexOf(q) === 0; })
+        .concat(CAT.filter(function (p) { return p.k.indexOf(q) > 0 || p.ke.indexOf(q) > 0; })).slice(0, 6);
+      if (!hits.length) { box.hidden = true; return; }
+      box.innerHTML = hits.map(function (p, i) {
+        return '<button type="button" data-i="' + i + '"><img src="img/i/' + p.p[3] + '.svg" alt="">' + esc(L() === "en" ? p.p[1] : p.p[0]) + "<small>" + esc(L() === "en" ? (CAT_EN[p.p[2]] || p.p[2]) : p.p[2]) + "</small></button>";
+      }).join("");
+      box.hidden = false;
+    }
+    function pick(i) { if (add(hits[i].p[0])) render(); $("wlIn").value = ""; $("sugg").hidden = true; $("wlIn").focus(); }
+    $("wlIn").oninput = suggest;
+    $("wlIn").onkeydown = function (e) {
+      var box = $("sugg"); if (box.hidden) return;
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault(); sel = (sel + (e.key === "ArrowDown" ? 1 : -1) + hits.length) % hits.length;
+        box.querySelectorAll("button").forEach(function (b, i) { b.classList.toggle("act", i === sel); });
+      } else if (e.key === "Escape") box.hidden = true;
+    };
+    $("sugg").onmousedown = function (e) { var b = e.target.closest("button"); if (b) { e.preventDefault(); pick(+b.dataset.i); } };
+    $("wlForm").onsubmit = function (e) {
+      e.preventDefault();
+      if (!$("sugg").hidden && sel >= 0) return pick(sel);
+      var v = $("wlIn").value, p = find(v) || (hits[0] && norm(L() === "en" ? hits[0].p[1] : hits[0].p[0]) === norm(v) ? hits[0].p : null);
+      if (add(p ? p[0] : v)) render();
+      $("wlIn").value = ""; $("sugg").hidden = true;
+    };
+    document.addEventListener("click", function (e) { if (!e.target.closest(".wl-add")) $("sugg").hidden = true; });
+
+    function recipes() {
+      $("rec").innerHTML = RECIPES.map(function (r, i) { return '<button type="button" data-i="' + i + '">' + r[0] + " " + esc(L() === "en" ? r[2] : r[1]) + "</button>"; }).join("");
+    }
+    $("rec").onclick = function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      var r = RECIPES[+b.dataset.i], n = 0;
+      r[3].forEach(function (x) { if (add(x, true)) n++; });
+      render(); toast(n ? T("Dodano: " + n + " sestavin", "Added " + n + " ingredients") : T("Vse je že na seznamu", "Everything is already on the list"));
+      if (innerWidth < 900) $("tList").querySelector(".panel").scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    // ---------- okvirno najceneje (brez cen) ----------
+    var PRICES = null;
+    function cheap() {
+      var box = $("cheap"); if (!box) return;
+      var open = list.filter(function (x) { return !x.d; });
+      if (!PRICES || open.length < 2) { box.hidden = true; return; }
+      var rows = open.map(function (x) { return PRICES[norm(x.n)]; }).filter(Boolean);
+      if (rows.length < 2) { box.hidden = true; return; }
+      var chains = {};
+      rows.forEach(function (r) { Object.keys(r).forEach(function (c) { chains[c] = (chains[c] || 0) + 1; }); });
+      var ok = Object.keys(chains).filter(function (c) { return chains[c] >= Math.ceil(rows.length * .6); });
+      if (ok.length < 2) { box.hidden = true; return; }
+      var cost = {};
+      ok.forEach(function (c) {
+        cost[c] = rows.reduce(function (a, r) { var mx = Math.max.apply(null, Object.keys(r).map(function (k) { return r[k]; })); return a + (r[c] != null ? r[c] : mx); }, 0);
+      });
+      var best = ok.sort(function (a, b) { return cost[a] - cost[b]; })[0], ch = CHAINS[best] || [best, "#6d28d9"];
+      box.innerHTML = '<span class="lg" style="background:' + ch[1] + '">' + esc(ch[0].charAt(0)) + '</span><div><b>' + T("Okvirno najceneje: ", "Roughly cheapest: ") + esc(ch[0]) + "</b><span>" +
+        T("Ocena za " + rows.length + " izdelkov s seznama. Le okvirna ocena; velja cena v trgovini.", "Estimate for " + rows.length + " items on your list. A rough estimate only; the store price applies.") + "</span></div>";
+      box.hidden = false;
+    }
+    fetch(LIVE + "prices.json", { cache: "no-store" }).then(function (r) { return r.json(); }).then(function (d) {
+      PRICES = {};
+      d.izdelki.forEach(function (x) { if (!x.znamka) PRICES[norm(x.ime)] = x.cene; });
+      cheap();
+    }).catch(function () {});
+
+    // ---------- prazniki in nedelje ----------
+    function easter(y) {
+      var a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3),
+        h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451),
+        mo = Math.floor((h + l - 7 * m + 114) / 31), da = ((h + l - 7 * m + 114) % 31) + 1;
+      return new Date(y, mo - 1, da);
+    }
+    function holidays(y) {
+      var e = easter(y), add = function (n) { return new Date(y, e.getMonth(), e.getDate() + n); };
+      return [[new Date(y, 0, 1), "Novo leto", "New Year"], [new Date(y, 0, 2), "Novo leto", "New Year"], [new Date(y, 1, 8), "Prešernov dan", "Prešeren Day"],
+        [e, "Velika noč", "Easter Sunday"], [add(1), "Velikonočni ponedeljek", "Easter Monday"], [new Date(y, 3, 27), "Dan upora proti okupatorju", "Resistance Day"],
+        [new Date(y, 4, 1), "Praznik dela", "Labour Day"], [new Date(y, 4, 2), "Praznik dela", "Labour Day"], [add(49), "Binkošti", "Whit Sunday"],
+        [new Date(y, 5, 25), "Dan državnosti", "Statehood Day"], [new Date(y, 7, 15), "Marijino vnebovzetje", "Assumption Day"], [new Date(y, 9, 31), "Dan reformacije", "Reformation Day"],
+        [new Date(y, 10, 1), "Dan spomina na mrtve", "Remembrance Day"], [new Date(y, 11, 25), "Božič", "Christmas"], [new Date(y, 11, 26), "Dan samostojnosti in enotnosti", "Independence Day"]];
+    }
+    var dkey = function (d) { return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate(); };
+    function holidayOn(d) { var k = dkey(d); return holidays(d.getFullYear()).filter(function (h) { return dkey(h[0]) === k; })[0] || null; }
+    function closedDay(d) { return d.getDay() === 0 || !!holidayOn(d); }
+    function upcoming() {
+      var now = new Date(), t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      return holidays(now.getFullYear()).concat(holidays(now.getFullYear() + 1)).filter(function (h) { return h[0] >= t0 && h[0].getDay() !== 0; }).slice(0, 4);
+    }
+    function today() {
+      var now = new Date(), h = holidayOn(now), box = $("todayBox");
+      var fmt = function (d) { return d.toLocaleDateString(L() === "en" ? "en-GB" : "sl-SI", { weekday: "long", day: "numeric", month: "long" }); };
+      var head = closedDay(now)
+        ? '<b class="tc">' + T("Danes so trgovine večinoma zaprte", "Most stores are closed today") + "</b><span>" + (h ? esc(L() === "en" ? h[2] : h[1]) + ". " : T("Nedelja. ", "Sunday. ")) + T("Odprte so lahko bencinske črpalke in manjše trgovine.", "Petrol stations and small shops may be open.") + "</span>"
+        : '<b class="to">' + T("Danes so trgovine odprte", "Stores are open today") + "</b><span>" + T("Ob nedeljah in praznikih je večina trgovin zaprta.", "Most stores close on Sundays and public holidays.") + "</span>";
+      box.innerHTML = head + '<div class="hol"><small>' + T("Prihodnji prazniki, ko so trgovine zaprte", "Upcoming holidays, stores closed") + "</small>" +
+        upcoming().map(function (x) { return "<div><span>" + esc(fmt(x[0])) + "</span><b>" + esc(L() === "en" ? x[2] : x[1]) + "</b></div>"; }).join("") + "</div>";
+    }
+
+    // ---------- odprte trgovine v bližini ----------
+    var DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+    function parseHours(h) {
+      var week = [[], [], [], [], [], [], []];
+      String(h || "").split(";").forEach(function (part) {
+        part = part.trim(); var m = part.match(/^([A-Za-z,\- ]+?)\s+(off|closed|[\d:,\- ]+)$/); if (!m) return;
+        var days = [];
+        m[1].split(",").forEach(function (seg) {
+          var r = seg.trim().split("-"), a = DAYS.indexOf(r[0]), b = DAYS.indexOf(r[1] || r[0]);
+          if (a < 0 || b < 0) return; for (var i = a; ; i = (i + 1) % 7) { days.push(i); if (i === b) break; }
+        });
+        var spans = m[2] === "off" || m[2] === "closed" ? [] : m[2].split(",").map(function (s) {
+          var t = s.trim().split("-").map(function (x) { var p = x.split(":"); return +p[0] * 60 + +(p[1] || 0); }); return t;
+        });
+        days.forEach(function (d) { week[d] = spans; });
+      });
+      return week;
+    }
+    var hm = function (min) { return Math.floor(min / 60) + ":" + String(min % 60).padStart(2, "0"); };
+    function status(h) {
+      var w = parseHours(h), now = new Date(), d = now.getDay(), t = now.getHours() * 60 + now.getMinutes();
+      if (!closedDay(now)) for (var i = 0; i < w[d].length; i++) if (t >= w[d][i][0] && t < w[d][i][1]) return { open: true, txt: T("Odprto · zapre ob ", "Open · closes at ") + hm(w[d][i][1]) };
+      for (var k = 0; k < 8; k++) {
+        var day = new Date(now.getFullYear(), now.getMonth(), now.getDate() + k), dd = day.getDay();
+        if (closedDay(day)) continue;
+        var sp = w[dd].filter(function (s) { return k > 0 || s[0] > t; })[0];
+        if (sp) return { open: false, txt: T("Zaprto · odpre ", "Closed · opens ") + (k === 0 ? T("danes ob ", "today at ") : k === 1 ? T("jutri ob ", "tomorrow at ") : day.toLocaleDateString(L() === "en" ? "en-GB" : "sl-SI", { weekday: "long" }) + T(" ob ", " at ")) + hm(sp[0]) };
+      }
+      return { open: false, txt: T("Zaprto", "Closed") };
+    }
+    function dist(a, b, c, d) { var R = 6371e3, r = Math.PI / 180, x = (d - b) * r * Math.cos((a + c) / 2 * r), y = (c - a) * r; return Math.sqrt(x * x + y * y) * R; }
+    var STORES = null, POS = null;
+    function loadStores() {
+      if (STORES) return Promise.resolve(STORES);
+      var conv = function (d) { return (STORES = d.trgovine.map(function (x) { return Array.isArray(x) ? x : [x.v, x.lat, x.lon, x.h]; })); };
+      return fetch(LIVE + "hours.json", { cache: "no-store" }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(conv)
+        .catch(function () { return fetch("data/trgovine.json").then(function (r) { return r.json(); }).then(conv); });
+    }
+    function showNear() {
+      if (!POS || !STORES) return;
+      var near = STORES.map(function (s) { return { s: s, d: dist(POS[0], POS[1], s[1], s[2]) }; }).sort(function (a, b) { return a.d - b.d; }).slice(0, 8);
+      $("nearBox").hidden = true; $("nearNote").hidden = false;
+      $("nearList").innerHTML = near.map(function (x, i) {
+        var c = CHAINS[x.s[0]] || [x.s[0], "#6d28d9"], st = status(x.s[3]);
+        var km = x.d < 1000 ? Math.round(x.d / 10) * 10 + " m" : (x.d / 1000).toFixed(1).replace(".", L() === "en" ? "." : ",") + " km";
+        return '<div class="srow" style="animation-delay:' + (i * .06) + 's"><span class="lg" style="background:' + c[1] + '">' + esc(c[0].charAt(0)) + '</span><div class="inf"><b>' + esc(c[0]) + " · " + km +
+          '</b><span class="st ' + (st.open ? "o" : "c") + '">' + esc(st.txt) + '</span></div><a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=' + x.s[1] + "," + x.s[2] + '">' + T("Pot", "Route") + " →</a></div>";
+      }).join("");
+    }
+    $("nearBtn").onclick = function () {
+      var b = this; b.disabled = true;
+      if (!navigator.geolocation) { toast(T("Brskalnik ne podpira lokacije", "Location not supported")); b.disabled = false; return; }
+      navigator.geolocation.getCurrentPosition(function (p) {
+        POS = [p.coords.latitude, p.coords.longitude];
+        loadStores().then(showNear).catch(function () { toast(T("Trgovin ni bilo mogoče naložiti", "Could not load stores")); b.disabled = false; });
+      }, function () { toast(T("Dovoli dostop do lokacije", "Please allow location access")); b.disabled = false; }, { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 });
+    };
+
+    // ---------- zagon ----------
+    fetch("data/katalog.json").then(function (r) { return r.json(); }).then(function (k) {
+      k.forEach(function (p) {
+        BY[norm(p[0])] = p; BY[norm(p[1])] = BY[norm(p[1])] || p;
+        CAT.push({ p: p, k: norm(p[0]), ke: norm(p[1]) });
+        if (CATS.indexOf(p[2]) < 0) CATS.push(p[2]);
+      });
+      var m = location.hash.match(/^#s=(.*)$/);
+      if (m) {
+        var n = 0; decodeURIComponent(m[1]).split("|").forEach(function (x) { if (add(x, true)) n++; });
+        history.replaceState(null, "", location.pathname + location.search);
+        setTimeout(function () { $("orodja").scrollIntoView(); toast(T("Seznam odprt ✓", "List opened ✓")); }, 400);
+      }
+      render();
+    });
+    function all() { recipes(); render(); today(); showNear(); }
+    new MutationObserver(all).observe(root, { attributes: true, attributeFilter: ["lang"] });
+    recipes(); today();
   })();
   </script>
 </body>
