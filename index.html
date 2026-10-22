@@ -12,6 +12,7 @@
   <meta name="apple-itunes-app" content="app-id=6818745132">
   <link rel="icon" href="img/ikona.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <script defer src="js/qrcode.js"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2170388618811750" crossorigin="anonymous"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -228,6 +229,34 @@
     .hol div b { text-align: right; }
     .note { font-size: 13px; color: #8d87a3; margin-top: 14px; font-weight: 600; }
 
+    .qrside { text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .qr { width: min(260px, 100%); aspect-ratio: 1; border-radius: 22px; background: #fff; display: grid; place-items: center; padding: 14px; margin: 6px 0 16px; color: #8d87a3; font-size: 14px; font-weight: 700; box-shadow: 0 30px 60px -30px rgba(139, 92, 246, .7); }
+    .qr svg { width: 100%; height: 100%; display: block; }
+    .qr span { padding: 0 14px; }
+    .side .small { font-size: 14px; color: var(--dim); margin: 0; }
+    .rsearch { position: relative; max-width: 620px; margin: 30px 0 18px; }
+    .rsearch svg { position: absolute; left: 18px; top: 50%; width: 22px; height: 22px; transform: translateY(-50%); stroke: var(--dim); fill: none; stroke-width: 2; stroke-linecap: round; }
+    .rsearch input { width: 100%; font: 700 18px "Inter Tight", sans-serif; color: var(--ink); background: rgba(255,255,255,.05); border: 1px solid var(--line); border-radius: 999px; padding: 16px 20px 16px 52px; outline: 0; transition: border-color .2s, background .2s; }
+    .rsearch input:focus { border-color: rgba(167, 139, 250, .6); background: rgba(139, 92, 246, .08); }
+    .rsearch input::placeholder { color: var(--dim); }
+    .rgroups { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; }
+    .rgroups::-webkit-scrollbar { display: none; }
+    .rgroups button { flex: none; font: 800 14px "Inter Tight", sans-serif; color: var(--muted); background: rgba(255,255,255,.04); border: 1px solid var(--line); padding: 10px 16px; border-radius: 999px; cursor: pointer; white-space: nowrap; transition: all .2s; }
+    .rgroups button small { font-weight: 700; color: var(--dim); margin-left: 6px; }
+    .rgroups button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .rgroups button[aria-pressed="true"] small { color: #6b6585; }
+    .rgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; margin-top: 22px; }
+    .rc { position: relative; text-align: left; font: inherit; color: var(--ink); border-radius: 22px; padding: 20px; background: var(--card); border: 1px solid var(--line); cursor: pointer; overflow: hidden; transition: transform .25s, border-color .25s, background .25s; animation: pop .35s ease-out both; }
+    .rc:hover { transform: translateY(-4px); border-color: rgba(167, 139, 250, .5); background: rgba(139, 92, 246, .08); }
+    .rc .em { font-size: 34px; line-height: 1; }
+    .rc b { display: block; font-size: 19px; font-weight: 900; letter-spacing: -.01em; margin: 12px 0 4px; line-height: 1.2; }
+    .rc .meta { font-size: 13px; color: var(--dim); font-weight: 700; }
+    .rc .ing { font-size: 14px; color: var(--muted); margin-top: 10px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-weight: 600; }
+    .rc .add { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(255,255,255,.08); font-size: 22px; font-weight: 700; transition: background .2s, transform .2s; }
+    .rc:hover .add { background: linear-gradient(135deg, #8b5cf6, #ec4899); transform: rotate(90deg); }
+    .rc.added .add { background: #15803d; transform: none; }
+    .rnone { color: var(--muted); margin-top: 20px; }
+
     /* kako deluje */
     .steps { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); margin-top: 48px; }
     .step { padding: clamp(24px, 2.6vw, 40px); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); position: relative; overflow: hidden; transition: background .3s; }
@@ -304,7 +333,7 @@
       <a class="brand" href="./"><img src="img/ikona-512.png" alt="">Nakupko<small>by REMAKO</small></a>
       <nav>
         <a class="opt" href="#orodja"><span data-sl>Moj seznam</span><span data-en>My list</span></a>
-        <a class="opt" href="#kako"><span data-sl>Kako deluje</span><span data-en>How it works</span></a>
+        <a class="opt" href="#jedi"><span data-sl>Recepti</span><span data-en>Recipes</span></a>
         <a class="opt" href="#funkcije"><span data-sl>Funkcije</span><span data-en>Features</span></a>
         <a class="opt" data-sl href="podpora.html">Podpora</a><a class="opt" data-en href="support.html">Support</a>
         <button class="lang" id="lang" type="button">EN</button>
@@ -396,12 +425,11 @@
             <button type="button" id="wlClear"><span data-sl>Pobriši vse</span><span data-en>Clear all</span></button>
           </div>
         </div>
-        <div class="side">
-          <h3 data-sl>Kaj boš kuhal?</h3><h3 data-en>What's cooking?</h3>
-          <p data-sl>Klikni jed in sestavine se dodajo na seznam.</p><p data-en>Tap a dish and its ingredients go on your list.</p>
-          <div class="rec" id="rec"></div>
-          <p style="margin:26px 0 0" data-sl>Seznam ostane shranjen v tem brskalniku. Z »Pošlji na telefon« ga odpreš kjerkoli, v aplikaciji Nakupko pa se še sam odpre, ko stopiš v trgovino.</p>
-          <p style="margin:26px 0 0" data-en>Your list stays saved in this browser. »Send to phone« opens it anywhere, and in the Nakupko app it even opens by itself when you walk into a store.</p>
+        <div class="side qrside">
+          <h3 data-sl>Na telefon v sekundi</h3><h3 data-en>To your phone in a second</h3>
+          <p data-sl>Skeniraj kodo s kamero telefona in seznam se odpre na telefonu.</p><p data-en>Scan the code with your phone camera and the list opens on your phone.</p>
+          <div class="qr" id="qr"><span data-sl>Dodaj izdelke in tu se pokaže koda.</span><span data-en>Add items and the code appears here.</span></div>
+          <p class="small" data-sl>Seznam ostane shranjen tudi v tem brskalniku.</p><p class="small" data-en>The list also stays saved in this browser.</p>
         </div>
       </div>
 
@@ -419,6 +447,21 @@
           <p data-sl>Tvoja lokacija ostane v brskalniku in se nikamor ne pošlje.</p><p data-en>Your location stays in your browser and is never sent anywhere.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section id="jedi" style="padding-top:0">
+    <div class="wrap">
+      <p class="eyebrow rv"><span data-sl>Recepti</span><span data-en>Recipes</span></p>
+      <h2 class="h rv"><span data-sl>Kaj boš <span class="grad">kuhal?</span></span><span data-en>What's <span class="grad">cooking?</span></span></h2>
+      <p class="lead rv"><span data-sl>Izberi jed in sestavine gredo naravnost na tvoj seznam.</span><span data-en>Pick a dish and its ingredients go straight to your list.</span></p>
+      <div class="rsearch rv">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="rq" type="search" autocomplete="off">
+      </div>
+      <div class="rgroups rv" id="rgroups"></div>
+      <div class="rgrid" id="rgrid"></div>
+      <p class="rnone" id="rnone" hidden><span data-sl>Ni zadetkov. Poskusi z drugo besedo, npr. »piscanec« ali »testenine«.</span><span data-en>No matches. Try another word, e.g. »chicken« or »pasta«.</span></p>
     </div>
   </section>
 
@@ -675,14 +718,6 @@
     // ---------- seznam ----------
     var CAT = [], BY = {}, CATS = [];
     var CAT_EN = { "Sadje in zelenjava": "Fruit & veg", "Mlečni izdelki": "Dairy", "Meso in ribe": "Meat & fish", "Kruh in pecivo": "Bakery", "Shramba": "Pantry", "Pijače": "Drinks", "Prigrizki": "Snacks", "Zamrznjeno": "Frozen", "Gospodinjstvo": "Household", "Higiena": "Hygiene", "Brez glutena": "Gluten free", "Ljubljenčki": "Pets", "Otroci": "Kids", "Zdravje": "Health", "Športna prehrana": "Sports nutrition", "Dom in vrt": "Home & garden", "Drugo": "Other" };
-    var RECIPES = [
-      ["🥞", "Palačinke", "Pancakes", ["Moka bela", "Mleko", "Jajca", "Sladkor", "Olje sončnično", "Marmelada", "Lešnikov namaz"]],
-      ["🍝", "Špageti bolonjez", "Spaghetti bolognese", ["Testenine špageti", "Mleto meso", "Čebula", "Česen", "Korenje", "Paradižnikova omaka (pasata)", "Parmezan"]],
-      ["🍕", "Domača pica", "Homemade pizza", ["Testo za pico", "Paradižnikova mezga", "Mozzarella", "Šunka", "Origano", "Olje sončnično"]],
-      ["🔥", "Žar", "Barbecue", ["Čevapčiči", "Lepinje", "Ajvar", "Čebula", "Solata ledenka", "Oglje za žar", "Pivo"]],
-      ["🍳", "Zajtrk", "Breakfast", ["Kruh beli", "Maslo", "Marmelada", "Jajca", "Jogurt navadni", "Banane", "Kava mleta"]],
-      ["🍚", "Rižota s piščancem", "Chicken risotto", ["Riž", "Piščančji file", "Čebula", "Bučke", "Smetana za kuhanje", "Parmezan"]]
-    ];
     var list = store("nk-web-list") || [];
     function save() { store("nk-web-list", list); }
     function find(name) { return BY[norm(name)]; }
@@ -699,7 +734,7 @@
       $("wlCount").textContent = open;
       $("wlIn").placeholder = T("Kaj moraš kupiti? npr. mleko", "What do you need? e.g. milk");
       $("wlActs").hidden = !list.length;
-      if (!list.length) { $("wlList").innerHTML = '<div class="empty"><i>🧺</i>' + T("Seznam je prazen. Dodaj izdelek ali izberi jed.", "Your list is empty. Add an item or pick a dish.") + "</div>"; cheap(); return; }
+      if (!list.length) { $("wlList").innerHTML = '<div class="empty"><i>🧺</i>' + T("Seznam je prazen. Dodaj izdelek ali spodaj izberi jed.", "Your list is empty. Add an item or pick a dish below.") + "</div>"; cheap(); qr(); recipes(); return; }
       var groups = {};
       list.forEach(function (x, i) { var p = find(x.n), c = p ? p[2] : "Drugo"; (groups[c] = groups[c] || []).push(i); });
       var order = CATS.concat(["Drugo"]).filter(function (c) { return groups[c]; });
@@ -710,14 +745,14 @@
         }).join("") + "</div>";
       }).join("");
       $("wlWa").href = "https://wa.me/?text=" + encodeURIComponent(text());
-      cheap();
+      cheap(); qr(); recipes();
     }
     $("wlList").onclick = function (e) {
       var r = e.target.closest(".wrow"); if (!r) return; var i = +r.dataset.i;
       if (e.target.classList.contains("x")) list.splice(i, 1); else list[i].d = !list[i].d;
       save(); render();
     };
-    function link() { return "https://nakupko.com/#s=" + encodeURIComponent(list.filter(function (x) { return !x.d; }).map(function (x) { return x.n; }).join("|")); }
+    function link() { return "https://nakupko.com/#s=" + list.filter(function (x) { return !x.d; }).map(function (x) { return encodeURIComponent(x.n); }).join("|"); }
     function text() {
       return T("🛒 Nakupovalni seznam:", "🛒 Shopping list:") + "\n" + list.filter(function (x) { return !x.d; }).map(function (x) { return "• " + nameOf(x.n); }).join("\n") + "\n\n" + T("Odpri seznam: ", "Open the list: ") + link();
     }
@@ -762,16 +797,51 @@
     };
     document.addEventListener("click", function (e) { if (!e.target.closest(".wl-add")) $("sugg").hidden = true; });
 
+    // ---------- recepti ----------
+    var REC = null, rgroup = "vse";
     function recipes() {
-      $("rec").innerHTML = RECIPES.map(function (r, i) { return '<button type="button" data-i="' + i + '">' + r[0] + " " + esc(L() === "en" ? r[2] : r[1]) + "</button>"; }).join("");
+      if (!REC) return;
+      $("rq").placeholder = T("Išči jed ali sestavino, npr. piscanec, testenine …", "Search a dish or ingredient, e.g. chicken, pasta …");
+      var q = norm($("rq").value), words = q.split(" ").filter(Boolean);
+      var cnt = { vse: REC.jedi.length }; REC.jedi.forEach(function (r) { cnt[r[4]] = (cnt[r[4]] || 0) + 1; });
+      $("rgroups").innerHTML = [["vse", "✨ Vse", "✨ All"]].concat(REC.skupine).map(function (g) {
+        return '<button type="button" data-g="' + g[0] + '" aria-pressed="' + (rgroup === g[0]) + '">' + esc(L() === "en" ? g[2] : g[1]) + "<small>" + cnt[g[0]] + "</small></button>";
+      }).join("");
+      var gname = {}; REC.skupine.forEach(function (g) { gname[g[0]] = g; });
+      var res = REC.jedi.map(function (r, i) { return i; }).filter(function (i) {
+        var r = REC.jedi[i];
+        if (!words.length && rgroup !== "vse" && r[4] !== rgroup) return false;
+        if (!words.length) return true;
+        var hay = r.hay || (r.hay = norm([r[1], r[2], gname[r[4]][1], gname[r[4]][2]].concat(r[5], r[5].map(function (x) { var p = find(x); return p ? p[1] : ""; })).join(" ")));
+        return words.every(function (w) { return hay.indexOf(w) >= 0; });
+      });
+      $("rnone").hidden = res.length > 0;
+      $("rgrid").innerHTML = res.map(function (i, k) {
+        var r = REC.jedi[i], has = r[5].every(function (x) { return list.some(function (y) { return norm(y.n) === norm(x); }); });
+        var t = r[3] >= 60 ? (r[3] / 60).toString().replace(".", L() === "en" ? "." : ",") + " h" : r[3] + " min";
+        return '<button type="button" class="rc' + (has ? " added" : "") + '" data-i="' + i + '" style="animation-delay:' + Math.min(k, 12) * .03 + 's"><span class="em">' + r[0] + '</span><span class="add">' + (has ? "✓" : "+") + "</span><b>" + esc(L() === "en" ? r[2] : r[1]) +
+          '</b><span class="meta">⏱ ' + t + " · " + r[5].length + T(" sestavin", " ingredients") + '</span><span class="ing">' + esc(r[5].map(nameOf).join(", ")) + "</span></button>";
+      }).join("");
     }
-    $("rec").onclick = function (e) {
-      var b = e.target.closest("button"); if (!b) return;
-      var r = RECIPES[+b.dataset.i], n = 0;
-      r[3].forEach(function (x) { if (add(x, true)) n++; });
-      render(); toast(n ? T("Dodano: " + n + " sestavin", "Added " + n + " ingredients") : T("Vse je že na seznamu", "Everything is already on the list"));
-      if (innerWidth < 900) $("tList").querySelector(".panel").scrollIntoView({ behavior: "smooth", block: "start" });
+    $("rgroups").onclick = function (e) { var b = e.target.closest("button"); if (!b) return; rgroup = b.dataset.g; $("rq").value = ""; recipes(); };
+    $("rq").oninput = recipes;
+    $("rgrid").onclick = function (e) {
+      var b = e.target.closest(".rc"); if (!b) return;
+      var r = REC.jedi[+b.dataset.i], n = 0;
+      r[5].forEach(function (x) { if (add(x, true)) n++; });
+      render(); recipes();
+      toast(n ? T("Na seznam dodano: " + n + " sestavin", "Added " + n + " ingredients to your list") : T("Vse je že na seznamu", "Everything is already on the list"));
     };
+    fetch("data/recepti.json").then(function (r) { return r.json(); }).then(function (d) { REC = d; recipes(); });
+
+    // ---------- QR koda ----------
+    function qr() {
+      var box = $("qr"), open = list.filter(function (x) { return !x.d; });
+      if (!open.length || !window.qrcode) { box.innerHTML = T("<span>Dodaj izdelke in tu se pokaže koda.</span>", "<span>Add items and the code appears here.</span>"); return; }
+      try { var q = window.qrcode(0, "M"); q.addData(link()); q.make(); box.innerHTML = q.createSvgTag({ cellSize: 4, margin: 0, scalable: true }); }
+      catch (e) { box.innerHTML = "<span>" + T("Seznam je predolg za kodo. Uporabi »Pošlji na telefon«.", "List too long for a code. Use »Send to phone«.") + "</span>"; }
+    }
+    addEventListener("load", qr);
 
     // ---------- okvirno najceneje (brez cen) ----------
     var PRICES = null;
@@ -899,7 +969,7 @@
       });
       var m = location.hash.match(/^#s=(.*)$/);
       if (m) {
-        var n = 0; decodeURIComponent(m[1]).split("|").forEach(function (x) { if (add(x, true)) n++; });
+        var n = 0; m[1].split("|").map(function (x) { try { return decodeURIComponent(x); } catch (e) { return x; } }).forEach(function (x) { if (add(x, true)) n++; });
         history.replaceState(null, "", location.pathname + location.search);
         setTimeout(function () { $("orodja").scrollIntoView(); toast(T("Seznam odprt ✓", "List opened ✓")); }, 400);
       }
