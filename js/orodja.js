@@ -227,6 +227,14 @@
     var pl = $("lpill"); if (pl) { pl.classList.remove("bump"); void pl.offsetWidth; pl.classList.add("bump"); }
   };
   function openRecipe(i) { if (!$("rmodal") || !REC || !REC.jedi[i]) return; cur = REC.jedi[i]; off = {}; drawModal(); $("rmodal").hidden = false; document.body.style.overflow = "hidden"; }
+  // trakovi: zgoraj zajtrki, v sredini kosila, spodaj večerje; vrstni red je vsakič naključen
+  var ZAJTRK_SLADKO = ["Palačinke", "Mlečni riž s cimetom", "Francoski rogljički doma", "Bananin kruh", "Vaflji", "Domači kruh", "Sadna solata", "Ocvrte miške", "Kruh z ajdovo moko"];
+  var OBROK = [
+    function (r) { return r[5] === "zajtrk" || ZAJTRK_SLADKO.indexOf(r[1]) >= 0; },
+    function (r) { return ["juhe", "meso", "klasika", "ribe", "zar"].indexOf(r[5]) >= 0; },
+    function (r) { return ["testenine", "svet", "zelenjava", "solate"].indexOf(r[5]) >= 0; }
+  ];
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   // predlog dneva in trak jedi (recepti.html, prva stran)
   function extras() {
     var day = Math.floor((Date.now() - new Date().getTimezoneOffset() * 6e4) / 864e5), en = L() === "en";
@@ -239,7 +247,7 @@
     }
     var traks = document.querySelectorAll(".dtrak"), nT = traks.length;
     traks.forEach(function (t, k) {
-      var ids = REC.jedi.map(function (r, i) { return i; }).filter(function (i) { return i % nT === k; }), out = $("rmodal") ? "button" : "a";
+      var ids = shuffle(REC.jedi.map(function (r, i) { return i; }).filter(function (i) { return OBROK[k % 3](REC.jedi[i]); })), out = $("rmodal") ? "button" : "a";
       var row = ids.map(function (i) { var r = REC.jedi[i]; return "<" + out + (out === "a" ? ' href="recepti.html#r=' + i + '"' : ' type="button"') + ' data-r="' + i + '">' + ico(r[0]) + esc(en ? r[2] : r[1]) + "</" + out + ">"; }).join("");
       t.innerHTML = '<div class="row">' + row + row + "</div>";
       // počasi: okoli 8 px na sekundo, ne glede na dolžino traku
