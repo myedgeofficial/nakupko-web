@@ -111,7 +111,7 @@
           <div class="cheap" id="cheap" hidden></div>
           <div class="wl-list" id="wlList"></div>
           <div class="acts" id="wlActs" hidden>
-            <a class="pri wapp" id="wlApp" href="#"><span data-sl>📲 Dodaj v Nakupko</span><span data-en>📲 Add to Nakupko</span></a>
+            <a class="pri wapp" id="wlApp" href="#"><span data-sl>📲 Odpri v Nakupku</span><span data-en>📲 Open in Nakupko</span></a>
             <button type="button" id="wlShare"><span data-sl>📤 Pošlji na telefon</span><span data-en>📤 Send to phone</span></button>
             <a id="wlWa" target="_blank" rel="noopener">WhatsApp</a>
             <button type="button" id="wlCopy"><span data-sl>Kopiraj</span><span data-en>Copy</span></button>
@@ -119,11 +119,13 @@
             <button type="button" id="wlClear"><span data-sl>Pobriši vse</span><span data-en>Clear all</span></button>
           </div>
         </div>
-        <div class="side qrside">
-          <h3 data-sl>Na telefon v sekundi</h3><h3 data-en>To your phone in a second</h3>
-          <p data-sl>Skeniraj kodo s kamero telefona in seznam se odpre na telefonu.</p><p data-en>Scan the code with your phone camera and the list opens on your phone.</p>
-          <div class="qr" id="qr"><span data-sl>Dodaj izdelke in tu se pokaže koda.</span><span data-en>Add items and the code appears here.</span></div>
-          <p class="small" data-sl>Seznam ostane shranjen tudi v tem brskalniku.</p><p class="small" data-en>The list also stays saved in this browser.</p>
+        <div class="side qrside" id="qrSide">
+          <h3 data-sl>Isti seznam kot na telefonu</h3><h3 data-en>The same list as on your phone</h3>
+          <p class="qtxt" data-sl>Skeniraj kodo s kamero telefona. Odpre se Nakupko in od zdaj je seznam isti tukaj in v aplikaciji.</p><p class="qtxt" data-en>Scan the code with your phone camera. Nakupko opens and from then on the list is the same here and in the app.</p>
+          <p class="qtxt tel" data-sl>Pritisni gumb. Odpre se Nakupko in od zdaj je seznam isti tukaj in v aplikaciji.</p><p class="qtxt tel" data-en>Tap the button. Nakupko opens and from then on the list is the same here and in the app.</p>
+          <div class="qr" id="qr"></div>
+          <a class="pri wapp" id="qrApp" href="#"><span data-sl>📲 Poveži z aplikacijo</span><span data-en>📲 Link to the app</span></a>
+          <p class="small qtxt" data-sl>Nimaš še Nakupka? <a href="#prenos">Prenesi ga brezplačno.</a></p><p class="small qtxt" data-en>No Nakupko yet? <a href="#prenos">Get it for free.</a></p>
         </div>
       </div>
 

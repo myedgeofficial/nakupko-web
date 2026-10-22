@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Poveži z Nakupkom</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#07060b">
+  <link rel="icon" href="img/ikona.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg: #07060b; --ink: #f4f1ff; --muted: #b4adc9; }
+    html[lang="sl"] [data-en], html[lang="en"] [data-sl] { display: none !important; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; background: radial-gradient(60% 50% at 50% 0%, rgba(139,92,246,.35), transparent 70%), var(--bg); color: var(--ink); font-family: "Inter Tight", system-ui, sans-serif; padding: 24px 16px; text-align: center; }
+    main { max-width: 380px; width: 100%; }
+    img { width: 84px; height: 84px; border-radius: 22px; box-shadow: 0 20px 50px -20px rgba(139,92,246,.8); }
+    h1 { font-size: 30px; font-weight: 900; letter-spacing: -.02em; margin: 22px 0 10px; line-height: 1.1; }
+    p { color: var(--muted); font-size: 17px; line-height: 1.45; margin: 0 0 26px; }
+    .go { display: block; background: var(--ink); color: #111; font-weight: 800; font-size: 19px; text-decoration: none; border-radius: 999px; padding: 18px 20px; }
+    .get { margin-top: 34px; font-size: 15px; color: var(--muted); }
+    .get a { display: block; margin-top: 10px; color: var(--ink); font-weight: 700; text-decoration: none; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; padding: 13px; }
+  </style>
+</head>
+<body>
+  <main>
+    <img src="img/ikona-512.png" alt="Nakupko">
+    <h1 data-sl>Povezujem seznam…</h1><h1 data-en>Linking your list…</h1>
+    <p data-sl>Če se Nakupko ni odprl sam, pritisni spodnji gumb.</p><p data-en>If Nakupko didn't open by itself, tap the button below.</p>
+    <a class="go" id="go" href="#"><span data-sl>Odpri Nakupko</span><span data-en>Open Nakupko</span></a>
+    <div class="get">
+      <span data-sl>Nimaš še Nakupka? Prenesi ga brezplačno, nato znova skeniraj kodo.</span><span data-en>No Nakupko yet? Get it for free, then scan the code again.</span>
+      <a id="store" href="https://apps.apple.com/si/app/nakupko/id6818745132"><span data-sl>Prenesi Nakupko</span><span data-en>Get Nakupko</span></a>
+    </div>
+  </main>
+  <script>
+    (function () {
+      var en = !/^(sl|hr|sr|bs)/i.test(navigator.language || "sl");
+      if (en) document.documentElement.lang = "en";
+      var k = (/[#&]k=([A-Z0-9]{10})/.exec(location.hash) || [])[1];
+      var android = /android/i.test(navigator.userAgent), play = "https://play.google.com/store/apps/details?id=si.nakupko.app";
+      if (android) document.getElementById("store").href = play;
+      var url = !k ? "nakupko://dodaj" : android
+        ? "intent://povezi?k=" + k + "#Intent;scheme=nakupko;package=si.nakupko.app;S.browser_fallback_url=" + encodeURIComponent(play) + ";end"
+        : "nakupko://povezi?k=" + k;
+      document.getElementById("go").href = url;
+      location.href = url;
+    })();
+  </script>
+</body>
+</html>

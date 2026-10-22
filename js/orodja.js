@@ -40,7 +40,7 @@
       return n + " " + (U[uu] ? U[uu][L() === "en" ? 1 : 0] : uu);
     }).join(" + ");
   }
-  function save() { store("nk-web-list", list); }
+  function save() { store("nk-web-list", list); push(); }
   function find(name) { return BY[norm(name)]; }
   function add(name, quiet, amt) {
     name = String(name || "").trim(); if (!name) return false;
@@ -50,7 +50,7 @@
       if (amt) { ex.m = ex.m || {}; ex.m[amt[1]] = (ex.m[amt[1]] || 0) + amt[0]; save(); return true; }
       if (!quiet) toast(T("Že na seznamu", "Already on the list")); return false;
     }
-    var it = { n: p ? p[0] : name.charAt(0).toUpperCase() + name.slice(1), d: false };
+    var it = { id: uid(), n: p ? p[0] : name.charAt(0).toUpperCase() + name.slice(1), d: false };
     if (amt) { it.m = {}; it.m[amt[1]] = amt[0]; }
     list.push(it); save(); return true;
   }
@@ -227,6 +227,14 @@
     var pl = $("lpill"); if (pl) { pl.classList.remove("bump"); void pl.offsetWidth; pl.classList.add("bump"); }
   };
   function openRecipe(i) { if (!$("rmodal") || !REC || !REC.jedi[i]) return; cur = REC.jedi[i]; off = {}; drawModal(); $("rmodal").hidden = false; document.body.style.overflow = "hidden"; }
+  // trakovi: zgoraj zajtrki, v sredini kosila, spodaj večerje; vrstni red je vsakič naključen
+  var ZAJTRK_SLADKO = ["Palačinke", "Mlečni riž s cimetom", "Francoski rogljički doma", "Bananin kruh", "Vaflji", "Domači kruh", "Sadna solata", "Ocvrte miške", "Kruh z ajdovo moko"];
+  var OBROK = [
+    function (r) { return r[5] === "zajtrk" || ZAJTRK_SLADKO.indexOf(r[1]) >= 0; },
+    function (r) { return ["juhe", "meso", "klasika", "ribe", "zar"].indexOf(r[5]) >= 0; },
+    function (r) { return ["testenine", "svet", "zelenjava", "solate"].indexOf(r[5]) >= 0; }
+  ];
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   // predlog dneva in trak jedi (recepti.html, prva stran)
   function extras() {
     var day = Math.floor((Date.now() - new Date().getTimezoneOffset() * 6e4) / 864e5), en = L() === "en";
@@ -239,7 +247,7 @@
     }
     var traks = document.querySelectorAll(".dtrak"), nT = traks.length;
     traks.forEach(function (t, k) {
-      var ids = REC.jedi.map(function (r, i) { return i; }).filter(function (i) { return i % nT === k; }), out = $("rmodal") ? "button" : "a";
+      var ids = shuffle(REC.jedi.map(function (r, i) { return i; }).filter(function (i) { return OBROK[k % 3](REC.jedi[i]); })), out = $("rmodal") ? "button" : "a";
       var row = ids.map(function (i) { var r = REC.jedi[i]; return "<" + out + (out === "a" ? ' href="recepti.html#r=' + i + '"' : ' type="button"') + ' data-r="' + i + '">' + ico(r[0]) + esc(en ? r[2] : r[1]) + "</" + out + ">"; }).join("");
       t.innerHTML = '<div class="row">' + row + row + "</div>";
       // počasi: okoli 8 px na sekundo, ne glede na dolžino traku
@@ -263,21 +271,29 @@
   if ($("lpill")) new IntersectionObserver(function (es) { seePanel = es[0].isIntersecting; pill(); }).observe($("wlPanel"));
   if ($("lpill")) $("lpill").onclick = function () { $("wlPanel").scrollIntoView({ behavior: "smooth", block: "start" }); };
 
-  // dodaj v aplikacijo (telefon)
+  // gumb na telefonu: odpre Nakupko in poveže ta seznam s seznamom v aplikaciji
   $("wlApp").onclick = function (e) {
-    e.preventDefault(); if (!openItems().length) return;
+    e.preventDefault();
     var t = setTimeout(function () { if (!document.hidden) { toast(T("Nimaš še Nakupka? Prenesi ga brezplačno.", "Don't have Nakupko yet? Get it for free.")); $("prenos").scrollIntoView({ behavior: "smooth" }); } }, 1800);
     addEventListener("pagehide", function () { clearTimeout(t); }, { once: true });
     document.addEventListener("visibilitychange", function () { if (document.hidden) clearTimeout(t); }, { once: true });
-    location.href = appLink();
+    if (SYNC) { location.href = "nakupko://dodaj"; return; }
+    listenPair(); location.href = "nakupko://povezi?k=" + pair();
   };
+  if ($("qrApp")) $("qrApp").onclick = $("wlApp").onclick;
 
-  // ---------- QR koda ----------
+  // ---------- QR koda: poveži s telefonom ----------
   function qr() {
-    var box = $("qr"), open = list.filter(function (x) { return !x.d; });
-    if (!open.length || !window.qrcode) { box.innerHTML = T("<span>Dodaj izdelke in tu se pokaže koda.</span>", "<span>Add items and the code appears here.</span>"); return; }
-    try { var q = window.qrcode(0, "M"); q.addData(link()); q.make(); box.innerHTML = q.createSvgTag({ cellSize: 4, margin: 0, scalable: true }); }
-    catch (e) { box.innerHTML = "<span>" + T("Seznam je predolg za kodo. Uporabi »Pošlji na telefon«.", "List too long for a code. Use »Send to phone«.") + "</span>"; }
+    var box = $("qr"), side = $("qrSide"); if (!box) return;
+    if (SYNC) {
+      side.classList.add("linked");
+      box.innerHTML = '<div class="linked-ok"><b>✓</b><strong>' + T("Povezano s telefonom", "Linked to your phone") + "</strong><span>" + T("Kar dodaš tukaj, se takoj pokaže v aplikaciji Nakupko. In obratno.", "Whatever you add here shows up in the Nakupko app right away. And the other way round.") + '</span><button type="button" id="unlink">' + T("Odklopi", "Unlink") + "</button></div>";
+      $("unlink").onclick = unlink;
+      return;
+    }
+    side.classList.remove("linked");
+    if (!window.qrcode) { box.innerHTML = ""; return; }
+    var q = window.qrcode(0, "M"); q.addData(pairUrl()); q.make(); box.innerHTML = q.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
   }
   addEventListener("load", qr);
 
@@ -398,6 +414,104 @@
       loadStores().then(showNear).catch(function () { toast(T("Trgovin ni bilo mogoče naložiti", "Could not load stores")); b.disabled = false; });
     }, function () { toast(T("Dovoli dostop do lokacije", "Please allow location access")); b.disabled = false; }, { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 });
   };
+
+  // ---------- isti seznam kot v aplikaciji (skupni seznam Nakupka) ----------
+  // QR vsebuje parno kodo. Aplikacija na /h/{par}/link zapiše kodo svojega seznama,
+  // splet se nato poveže na /h/{koda}/items, tako kot drug telefon v skupnem seznamu.
+  var DB = "https://nakupko-8ad19-default-rtdb.europe-west1.firebasedatabase.app";
+  var SYNC = store("nk-sync"), shared = null, esItems = null, esPair = null, pairTimer = 0;
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function pair() {
+    var k = store("nk-pair");
+    if (!k || k.length !== 10) { var a = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", b = new Uint32Array(10); crypto.getRandomValues(b); k = ""; for (var i = 0; i < 10; i++) k += a[b[i] % a.length]; store("nk-pair", k); }
+    return k;
+  }
+  function pairUrl() { return "https://nakupko.com/povezi.html#k=" + pair(); }
+  function listenPair() {
+    if (SYNC || esPair || !window.EventSource) return;
+    var k = pair();
+    esPair = new EventSource(DB + "/h/" + k + "/link.json");
+    esPair.addEventListener("put", function (e) {
+      var m; try { m = JSON.parse(e.data); } catch (x) { return; }
+      var c = m && m.data && (m.path === "/" ? m.data.c : null);
+      if (!c || !/^[A-Z0-9]{10}$/.test(c)) return;
+      stopPair(); SYNC = { c: c }; store("nk-sync", SYNC); store("nk-pair", null);
+      fetch(DB + "/h/" + k + ".json", { method: "DELETE" }).catch(function () {});
+      shared = null; connectItems();
+      toast(T("✓ Povezano s telefonom", "✓ Linked to your phone"));
+    });
+    clearTimeout(pairTimer); pairTimer = setTimeout(stopPair, 15 * 60000);
+  }
+  function stopPair() { if (esPair) { esPair.close(); esPair = null; } clearTimeout(pairTimer); }
+  function toWeb(o) { return { id: o.id, n: o.name, d: !!o.done, m: o.amt || undefined, o: o }; }
+  function fromShared() {
+    list = Object.keys(shared).map(function (id) { return shared[id]; }).filter(function (o) { return o && o.id && o.name; })
+      .sort(function (a, b) { return (a.addedAt || 0) - (b.addedAt || 0); }).map(toWeb);
+    store("nk-web-list", list);
+  }
+  function toApp(x) {
+    var p = find(x.n), o = JSON.parse(JSON.stringify(x.o || { id: x.id, brand: "", qty: 1, cat: p ? p[2] : "Drugo", addedAt: Date.now() }));
+    o.id = x.id; o.name = x.n; o.done = !!x.d;
+    if (x.m && Object.keys(x.m).length) o.amt = x.m; else delete o.amt;
+    if (o.done && !o.doneAt) o.doneAt = Date.now(); if (!o.done) delete o.doneAt;
+    return o;
+  }
+  function push() {
+    if (!SYNC || !shared) return;
+    var patch = {}, n = 0, seen = {};
+    list.forEach(function (x) {
+      if (!x.id) x.id = uid();
+      seen[x.id] = 1; var o = toApp(x);
+      if (JSON.stringify(o) !== JSON.stringify(shared[x.id])) { patch[x.id] = o; shared[x.id] = o; x.o = o; n++; }
+    });
+    Object.keys(shared).forEach(function (id) { if (!seen[id]) { patch[id] = null; delete shared[id]; n++; } });
+    store("nk-web-list", list);
+    if (n) fetch(DB + "/h/" + SYNC.c + "/items.json", { method: "PATCH", body: JSON.stringify(patch) }).catch(function () { toast(T("Ni povezave. Poskusi znova.", "No connection. Try again.")); });
+  }
+  function connectItems() {
+    var merge = true;
+    if (!SYNC || !window.EventSource) return;
+    if (esItems) esItems.close();
+    esItems = new EventSource(DB + "/h/" + SYNC.c + "/items.json");
+    function on(kind) {
+      return function (e) {
+        var m; try { m = JSON.parse(e.data); } catch (x) { return; }
+        if (!m) return;
+        var parts = m.path.split("/").filter(Boolean);
+        if (!parts.length) {
+          if (kind === "put" || !shared) shared = m.data || {};
+          else Object.keys(m.data || {}).forEach(function (id) { if (m.data[id] === null) delete shared[id]; else shared[id] = m.data[id]; });
+        } else if (shared) {
+          var id = parts[0];
+          if (parts.length === 1) { if (m.data === null) delete shared[id]; else shared[id] = m.data; }
+          else if (shared[id]) { if (m.data === null) delete shared[id][parts[1]]; else shared[id][parts[1]] = m.data; }
+        }
+        if (!shared) return;
+        if (merge) {
+          // zraven gre tudi to, kar je bilo dodano samo na spletu (še ni bilo poslano)
+          merge = false;
+          var mine = list.filter(function (x) { return !x.o && !x.d && !Object.keys(shared).some(function (id) { var o = shared[id]; return o && !o.done && norm(o.name) === norm(x.n); }); });
+          fromShared(); mine.forEach(function (x) { x.o = null; if (!x.id || shared[x.id]) x.id = uid(); list.push(x); }); push();
+        } else fromShared();
+        render();
+      };
+    }
+    esItems.addEventListener("put", on("put"));
+    esItems.addEventListener("patch", on("patch"));
+  }
+  function unlink() {
+    if (esItems) esItems.close(); esItems = null; SYNC = null; shared = null; store("nk-sync", null);
+    list.forEach(function (x) { delete x.o; }); store("nk-web-list", list);
+    render(); listenPair();
+  }
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) { if (esItems) { esItems.close(); esItems = null; } stopPair(); }
+    else if (SYNC) { connectItems(); } else if (seeQr) listenPair();
+  });
+  // parno kodo poslušamo samo, ko je QR na zaslonu (ali po pritisku na gumb)
+  var seeQr = false;
+  if ($("qr") && window.IntersectionObserver) new IntersectionObserver(function (es) { seeQr = es[0].isIntersecting; if (seeQr) listenPair(); }).observe($("qr"));
+  if (SYNC) connectItems();
 
   // ---------- zagon ----------
   fetch("data/katalog.json").then(function (r) { return r.json(); }).then(function (k) {
