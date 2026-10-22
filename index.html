@@ -150,7 +150,8 @@
 
     /* ticker */
     .ticker { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); overflow: hidden; padding: 22px 0; }
-    .ticker .row { display: flex; gap: 52px; width: max-content; animation: run 42s linear infinite; font-weight: 800; font-size: clamp(18px, 1.8vw, 26px); white-space: nowrap; color: var(--muted); }
+    .ticker .row { display: flex; width: max-content; animation: run 42s linear infinite; font-weight: 800; font-size: clamp(18px, 1.8vw, 26px); white-space: nowrap; color: var(--muted); }
+    .ticker .row span { padding-right: 52px; }
     .ticker .row span::before { content: "◆"; color: var(--v); margin-right: 52px; font-size: .6em; vertical-align: middle; }
     @keyframes run { to { transform: translateX(-50%); } }
 
@@ -188,9 +189,9 @@
 
     /* galerija */
     .gal { overflow: hidden; margin-top: 48px; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-    .gal .row { display: flex; gap: 22px; width: max-content; animation: run 50s linear infinite; }
+    .gal .row { display: flex; width: max-content; animation: run 90s linear infinite; }
     .gal:hover .row { animation-play-state: paused; }
-    .gal img { width: clamp(200px, 22vw, 270px); aspect-ratio: 9 / 16; border-radius: 26px; border: 1px solid var(--line); box-shadow: 0 30px 60px -30px rgba(0,0,0,.8); }
+    .gal img { flex: none; margin-right: clamp(32px, 4vw, 64px); width: clamp(200px, 22vw, 270px); aspect-ratio: 9 / 16; border-radius: 26px; border: 1px solid var(--line); box-shadow: 0 30px 60px -30px rgba(0,0,0,.8); }
 
     /* zaključek */
     .final { text-align: center; overflow: hidden; }
@@ -383,10 +384,10 @@
 
     // galerija in ticker
     var gal = document.getElementById("gal"), gh = "";
-    for (var r = 0; r < 2; r++) for (var i = 1; i <= 4; i++) gh += '<img data-n="' + i + '" alt="" loading="lazy">';
+    for (var r = 0; r < 6; r++) for (var i = 1; i <= 4; i++) gh += '<img data-n="' + i + '" alt="" loading="lazy">';
     gal.innerHTML = gh;
     var words = ["Hofer", "Lidl", "Spar", "Mercator", "Tuš", "Jager", "Eurospin", "Baby Center", "OBI", "Bauhaus", "Merkur", "Mr. Pet"];
-    document.getElementById("tick").innerHTML = words.concat(words).map(function (w) { return "<span>" + w + "</span>"; }).join("");
+    document.getElementById("tick").innerHTML = words.concat(words, words, words).map(function (w) { return "<span>" + w + "</span>"; }).join("");
     document.getElementById("stores2").innerHTML = document.querySelector(".hero-grid .stores").innerHTML;
 
     setLang(start);
