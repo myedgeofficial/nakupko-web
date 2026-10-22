@@ -424,3 +424,14 @@ footer a:hover { color: var(--ink); }
   .dnevni b { margin-top: 100px; }
 }
 @media (max-width: 720px) { .nav nav a.opt.mob { display: inline; } .brand small { display: none; } }
+
+/* ---------- ozadje: mehak barvni sij (namesto črt) ---------- */
+.aura { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.aura i { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .55; will-change: transform; }
+.aura i:nth-child(1) { width: 60vmax; height: 60vmax; left: -18vmax; top: -22vmax; background: radial-gradient(circle, #7c3aed 0%, transparent 65%); animation: drift1 26s ease-in-out infinite alternate; }
+.aura i:nth-child(2) { width: 52vmax; height: 52vmax; right: -16vmax; top: 10%; background: radial-gradient(circle, #db2777 0%, transparent 65%); opacity: .38; animation: drift2 32s ease-in-out infinite alternate; }
+.aura i:nth-child(3) { width: 46vmax; height: 46vmax; left: 25%; bottom: -30vmax; background: radial-gradient(circle, #f59e0b 0%, transparent 65%); opacity: .22; animation: drift3 38s ease-in-out infinite alternate; }
+.aura b { position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px); background-size: 26px 26px; -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 0%, transparent 75%); mask-image: radial-gradient(ellipse at 50% 40%, #000 0%, transparent 75%); }
+@keyframes drift1 { to { transform: translate(14vmax, 10vmax) scale(1.12); } }
+@keyframes drift2 { to { transform: translate(-12vmax, 8vmax) scale(.9); } }
+@keyframes drift3 { to { transform: translate(-10vmax, -12vmax) scale(1.15); } }
