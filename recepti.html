@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Recepti – Nakupko</title>
+  <meta name="description" content="181 receptov od hitrih do nedeljskih. Izberi, za koliko oseb kuhaš, in sestavine s količinami gredo na nakupovalni seznam.">
+  <meta name="theme-color" content="#07060b">
+  <meta property="og:title" content="Recepti · Nakupko">
+  <meta property="og:description" content="181 receptov s količinami za toliko oseb, kot jih kuhaš.">
+  <meta property="og:image" content="https://nakupko.com/img/ikona-512.png">
+  <meta name="apple-itunes-app" content="app-id=6818745132">
+  <link rel="icon" href="img/ikona.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <script defer src="js/qrcode.js"></script>
+  <script src="js/ikone-jedi.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2170388618811750" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/stran.css">
+</head>
+<body class="rpage">
+  <header class="nav" id="nav">
+    <div class="wrap">
+      <a class="brand" href="./"><img src="img/ikona-512.png" alt="">Nakupko<small>by REMAKO</small></a>
+      <nav>
+        <a class="opt mob" href="./#orodja"><span data-sl>Moj seznam</span><span data-en>My list</span></a>
+        <a class="opt on" href="recepti.html"><span data-sl>Recepti</span><span data-en>Recipes</span></a>
+        <a class="opt" href="./#funkcije"><span data-sl>Funkcije</span><span data-en>Features</span></a>
+        <a class="opt" data-sl href="podpora.html">Podpora</a><a class="opt" data-en href="support.html">Support</a>
+        <button class="lang" id="lang" type="button">EN</button>
+        <a class="get" href="#prenos"><span data-sl>Prenesi</span><span data-en>Get it</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <section id="rhero">
+    <canvas id="flow" aria-hidden="true"></canvas>
+    <div class="wrap rh-grid">
+      <div>
+        <p class="eyebrow rv"><span data-sl>Recepti Nakupko</span><span data-en>Nakupko recipes</span></p>
+        <h1 class="h rv" style="--d:.08s"><span data-sl>Kuhaj brez<br><span class="grad">razmišljanja.</span></span><span data-en>Cook without<br><span class="grad">overthinking.</span></span></h1>
+        <p class="lead rv" style="--d:.16s"><span data-sl>181 jedi, od 10-minutnih večerij do nedeljske potice. Povej, koliko časa imaš in za koliko oseb kuhaš. Količine gredo same na tvoj seznam.</span><span data-en>181 dishes, from 10-minute dinners to Sunday baking. Tell us how much time you have and how many you're cooking for. The amounts go straight onto your list.</span></p>
+        <div class="rstats rv" style="--d:.24s">
+          <div><b class="cu" data-to="181">0</b><span data-sl>jedi</span><span data-en>dishes</span></div>
+          <div><b class="cu" data-to="11">0</b><span data-sl>map</span><span data-en>folders</span></div>
+          <div><b>1–20</b><span data-sl>oseb</span><span data-en>people</span></div>
+        </div>
+        <a class="get big rv" style="--d:.3s" href="#kuhinja"><span data-sl>Začni izbirati</span><span data-en>Start choosing</span> ↓</a>
+      </div>
+      <button type="button" class="dnevni rv" id="dnevni" style="--d:.2s"></button>
+    </div>
+  </section>
+
+  <div class="dtrak" aria-hidden="true"></div>
+  <div class="dtrak rev" aria-hidden="true"></div>
+
+  <section id="kuhinja">
+    <div class="wrap">
+      <div class="kuh rv" id="tList">
+        <div class="rbox" id="jedi">
+          <div class="rsearch">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="rq" type="search" autocomplete="off">
+          </div>
+          <div id="rflow"></div>
+        </div>
+        <div class="kuh-side">
+          <div class="panel" id="wlPanel">
+            <div class="wl-top"><b id="wlCount">0</b><span><span data-sl>za kupiti</span><span data-en>to buy</span></span></div>
+            <form class="wl-add" id="wlForm" autocomplete="off">
+              <input id="wlIn" type="text" enterkeyhint="done" aria-label="Izdelek">
+              <button type="submit" aria-label="Dodaj">+</button>
+              <div class="sugg" id="sugg" hidden></div>
+            </form>
+            <div class="cheap" id="cheap" hidden></div>
+            <div class="wl-list" id="wlList"></div>
+            <div class="acts" id="wlActs" hidden>
+              <a class="pri wapp" id="wlApp" href="#"><span data-sl>📲 Dodaj v Nakupko</span><span data-en>📲 Add to Nakupko</span></a>
+              <button type="button" id="wlShare"><span data-sl>📤 Pošlji na telefon</span><span data-en>📤 Send to phone</span></button>
+              <a id="wlWa" target="_blank" rel="noopener">WhatsApp</a>
+              <button type="button" id="wlCopy"><span data-sl>Kopiraj</span><span data-en>Copy</span></button>
+              <button type="button" id="wlDone"><span data-sl>Pobriši kupljeno</span><span data-en>Clear bought</span></button>
+              <button type="button" id="wlClear"><span data-sl>Pobriši vse</span><span data-en>Clear all</span></button>
+            </div>
+          </div>
+          <div class="side qrside">
+            <h3 data-sl>Na telefon v sekundi</h3><h3 data-en>To your phone in a second</h3>
+            <div class="qr" id="qr"><span data-sl>Dodaj izdelke in tu se pokaže koda.</span><span data-en>Add items and the code appears here.</span></div>
+            <p class="small" data-sl>Skeniraj s kamero telefona. Seznam ostane shranjen tudi v tem brskalniku.</p><p class="small" data-en>Scan with your phone camera. The list also stays saved in this browser.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final" id="prenos">
+    <div class="orb" aria-hidden="true"></div>
+    <div class="wrap">
+      <h2 class="h rv"><span data-sl>Seznam gre<br><span class="grad">s tabo v trgovino.</span></span><span data-en>Your list comes<br><span class="grad">to the store with you.</span></span></h2>
+      <p class="lead rv"><span data-sl>V aplikaciji Nakupko se seznam sam odpre, ko stopiš v trgovino. Brezplačno za iPhone in Android.</span><span data-en>In the Nakupko app your list opens by itself when you walk into a store. Free on iPhone and Android.</span></p>
+        <div class="stores rv">
+        <a class="store" href="https://apps.apple.com/si/app/nakupko/id6818745132">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.37 12.77c-.02-2.22 1.82-3.29 1.9-3.34-1.04-1.52-2.65-1.72-3.22-1.75-1.37-.14-2.68.81-3.37.81-.7 0-1.77-.79-2.91-.77-1.5.02-2.88.87-3.65 2.21-1.56 2.7-.4 6.69 1.12 8.88.74 1.07 1.62 2.27 2.78 2.23 1.12-.05 1.54-.72 2.89-.72 1.35 0 1.73.72 2.91.7 1.2-.02 1.96-1.09 2.69-2.17.85-1.24 1.2-2.44 1.22-2.5-.03-.01-2.33-.9-2.36-3.58zM14.15 6.25c.61-.75 1.03-1.78.92-2.81-.88.04-1.96.59-2.6 1.33-.56.65-1.06 1.71-.93 2.71.99.08 2-.5 2.61-1.23z"/></svg>
+          <span><small data-sl>Prenesi v</small><small data-en>Download on the</small><b>App Store</b></span>
+        </a>
+        <a class="store ghost" href="https://play.google.com/store/apps/details?id=si.nakupko.app">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 2.3c-.2.2-.3.6-.3 1v17.4c0 .4.1.8.3 1l9.7-9.7L3.6 2.3zm10.8 10.8 2.6 2.6-11.9 6.8c-.3.2-.7.2-.9.1l10.2-9.5zm3.9-3.9 2.9 1.6c.9.5.9 1.8 0 2.3l-2.9 1.7-2.8-2.8 2.8-2.8zM4.1 1.4c.3-.1.6 0 .9.1l11.9 6.8-2.6 2.6L4.1 1.4z"/></svg>
+          <span><small data-sl>Na voljo v</small><small data-en>Get it on</small><b>Google Play</b></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <nav>
+        <a data-sl href="podpora.html">Podpora</a><a data-en href="support.html">Support</a>
+        <a data-sl href="zasebnost.html">Zasebnost</a><a data-en href="privacy.html">Privacy</a>
+        <a href="mailto:support@remako.si">support@remako.si</a>
+      </nav>
+      <div>© 2026 <a href="https://remako.si">REMAKO d.o.o.</a></div>
+    </div>
+  </footer>
+  <div class="toast" id="toast"></div>
+  <button type="button" class="lpill" id="lpill"><span data-sl>Moj seznam</span><span data-en>My list</span><b id="lpillN">0</b></button>
+  <div class="rmodal" id="rmodal" hidden>
+    <div class="rsheet" role="dialog" aria-modal="true" aria-labelledby="rmTitle">
+      <button type="button" class="rclose" id="rmClose" aria-label="Zapri">×</button>
+      <div class="rmhead"><span class="em" id="rmEm" aria-hidden="true"></span><div><b id="rmTitle"></b><span id="rmMeta"></span></div></div>
+      <div class="serv"><span data-sl>Za koliko oseb?</span><span data-en>How many people?</span>
+        <div class="step2"><button type="button" id="rmMinus" aria-label="−">−</button><b id="rmN">4</b><button type="button" id="rmPlus" aria-label="+">+</button></div></div>
+      <div class="rmlist" id="rmList"></div>
+      <p class="rmhint" data-sl>Odkljukaj, kar že imaš doma.</p><p class="rmhint" data-en>Untick what you already have at home.</p>
+      <button type="button" class="rmadd" id="rmAdd"></button>
+    </div>
+  </div>
+
+  <script src="js/stran.js"></script>
+  <script src="js/orodja.js"></script>
+</body>
+</html>
