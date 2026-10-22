@@ -13,6 +13,7 @@
   <link rel="icon" href="img/ikona.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <script defer src="js/qrcode.js"></script>
+  <script src="js/ikone-jedi.js"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2170388618811750" crossorigin="anonymous"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -162,7 +163,7 @@
     .tool-tabs button { font: 800 15px "Inter Tight", sans-serif; color: var(--muted); background: none; border: 0; padding: 10px 20px; border-radius: 999px; cursor: pointer; transition: background .2s, color .2s; }
     .tool-tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
     .tool { display: grid; grid-template-columns: 1.2fr .8fr; gap: 20px; }
-    .tool[hidden] { display: none; }
+    .tool[hidden], .kuh[hidden] { display: none; }
     @media (max-width: 900px) { .tool { grid-template-columns: 1fr; } }
     .panel { background: #f5f3fb; color: #17132a; border-radius: 28px; padding: clamp(18px, 2.4vw, 30px); box-shadow: 0 40px 80px -40px rgba(91, 52, 190, .55); min-height: 420px; }
     .side { border: 1px solid var(--line); border-radius: 28px; padding: clamp(20px, 2.4vw, 32px); background: rgba(255,255,255,.02); }
@@ -200,8 +201,10 @@
     .acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
     .acts button, .acts a { font: 800 14px "Inter Tight", sans-serif; border-radius: 999px; padding: 10px 16px; cursor: pointer; text-decoration: none; border: 1px solid #ddd6ee; background: #fff; color: #17132a; }
     .acts .pri { background: #17132a; color: #fff; border-color: #17132a; }
-    .toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 140%); background: var(--ink); color: var(--bg); font-weight: 800; padding: 12px 20px; border-radius: 999px; z-index: 80; transition: transform .35s; }
-    .toast.on { transform: translate(-50%, 0); }
+    .toast { position: fixed; left: 50%; bottom: calc(28px + env(safe-area-inset-bottom)); width: max-content; max-width: calc(100vw - 32px); text-align: center; transform: translate(-50%, 0); opacity: 0; visibility: hidden; background: var(--ink); color: var(--bg); font-weight: 800; padding: 12px 20px; border-radius: 20px; z-index: 80; transition: opacity .3s, transform .35s, visibility .3s; }
+    .toast.on { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+    .toast:not(.on) { transform: translate(-50%, 20px); }
+    body.pill-on .toast { bottom: calc(88px + env(safe-area-inset-bottom)); }
     .near-btn { display: inline-flex; align-items: center; gap: 10px; font: 800 17px "Inter Tight", sans-serif; background: linear-gradient(95deg, #8b5cf6, #ec4899); color: #fff; border: 0; padding: 15px 24px; border-radius: 999px; cursor: pointer; box-shadow: 0 16px 40px -14px rgba(236, 72, 153, .7); }
     .near-btn:disabled { opacity: .6; }
     .stores-list { display: grid; gap: 10px; margin-top: 4px; }
@@ -234,28 +237,107 @@
     .qr svg { width: 100%; height: 100%; display: block; }
     .qr span { padding: 0 14px; }
     .side .small { font-size: 14px; color: var(--dim); margin: 0; }
-    .rsearch { position: relative; max-width: 620px; margin: 30px 0 18px; }
+    .kuh { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(320px, .85fr); gap: 22px; align-items: start; }
+    @media (max-width: 900px) { .kuh { grid-template-columns: 1fr; } }
+    .kuh-side { position: sticky; top: 84px; display: grid; gap: 16px; }
+    @media (max-width: 900px) { .kuh-side { position: static; } }
+    .kuh-side .panel { min-height: 0; }
+    .kuh-side .qrside { padding: 22px; }
+    .kuh-side .qr { width: 170px; margin: 4px 0 10px; }
+    .rbox { border: 1px solid var(--line); border-radius: 28px; padding: clamp(18px, 2.6vw, 34px); background: rgba(255,255,255,.02); min-height: 560px; }
+    .rsearch { position: relative; margin: 0 0 26px; }
     .rsearch svg { position: absolute; left: 18px; top: 50%; width: 22px; height: 22px; transform: translateY(-50%); stroke: var(--dim); fill: none; stroke-width: 2; stroke-linecap: round; }
-    .rsearch input { width: 100%; font: 700 18px "Inter Tight", sans-serif; color: var(--ink); background: rgba(255,255,255,.05); border: 1px solid var(--line); border-radius: 999px; padding: 16px 20px 16px 52px; outline: 0; transition: border-color .2s, background .2s; }
+    .rsearch input { width: 100%; font: 700 17px "Inter Tight", sans-serif; color: var(--ink); background: rgba(255,255,255,.05); border: 1px solid var(--line); border-radius: 999px; padding: 15px 20px 15px 52px; outline: 0; transition: border-color .2s, background .2s; }
     .rsearch input:focus { border-color: rgba(167, 139, 250, .6); background: rgba(139, 92, 246, .08); }
     .rsearch input::placeholder { color: var(--dim); }
-    .rgroups { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; }
-    .rgroups::-webkit-scrollbar { display: none; }
-    .rgroups button { flex: none; font: 800 14px "Inter Tight", sans-serif; color: var(--muted); background: rgba(255,255,255,.04); border: 1px solid var(--line); padding: 10px 16px; border-radius: 999px; cursor: pointer; white-space: nowrap; transition: all .2s; }
-    .rgroups button small { font-weight: 700; color: var(--dim); margin-left: 6px; }
-    .rgroups button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-    .rgroups button[aria-pressed="true"] small { color: #6b6585; }
-    .rgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; margin-top: 22px; }
-    .rc { position: relative; text-align: left; font: inherit; color: var(--ink); border-radius: 22px; padding: 20px; background: var(--card); border: 1px solid var(--line); cursor: pointer; overflow: hidden; transition: transform .25s, border-color .25s, background .25s; animation: pop .35s ease-out both; }
-    .rc:hover { transform: translateY(-4px); border-color: rgba(167, 139, 250, .5); background: rgba(139, 92, 246, .08); }
-    .rc .em { font-size: 34px; line-height: 1; }
-    .rc b { display: block; font-size: 19px; font-weight: 900; letter-spacing: -.01em; margin: 12px 0 4px; line-height: 1.2; }
-    .rc .meta { font-size: 13px; color: var(--dim); font-weight: 700; }
-    .rc .ing { font-size: 14px; color: var(--muted); margin-top: 10px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-weight: 600; }
-    .rc .add { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: rgba(255,255,255,.08); font-size: 22px; font-weight: 700; transition: background .2s, transform .2s; }
-    .rc:hover .add { background: linear-gradient(135deg, #8b5cf6, #ec4899); transform: rotate(90deg); }
-    .rc.added .add { background: #15803d; transform: none; }
-    .rnone { color: var(--muted); margin-top: 20px; }
+    .rcrumbs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .rcrumbs button { font: 800 13px "Inter Tight", sans-serif; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); background: rgba(255,255,255,.05); border: 1px solid var(--line); padding: 8px 14px; border-radius: 999px; cursor: pointer; }
+    .rcrumbs button:hover { color: var(--ink); border-color: rgba(167,139,250,.5); }
+    .rcrumbs button::after { content: " ×"; color: var(--dim); }
+    .rstep { animation: pop .4s ease-out both; }
+    .rstep .k { font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: #a78bfa; }
+    .rstep h3 { font-size: clamp(30px, 4vw, 46px); font-weight: 900; letter-spacing: -.035em; line-height: 1.02; margin: 8px 0 22px; }
+    .ropts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    @media (max-width: 520px) { .ropts { grid-template-columns: 1fr; } }
+    .ropt { text-align: left; font: inherit; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 20px 22px; cursor: pointer; transition: transform .25s, border-color .25s, background .25s; animation: pop .35s ease-out both; }
+    .ropt:hover { transform: translateY(-3px); border-color: rgba(167,139,250,.55); background: rgba(139,92,246,.09); }
+    .ropt b { display: block; font-size: clamp(24px, 2.6vw, 30px); font-weight: 900; letter-spacing: -.03em; line-height: 1.05; }
+    .ropt span { display: block; color: var(--muted); font-weight: 700; font-size: 14px; margin-top: 6px; }
+    .ropt small { display: inline-block; margin-top: 12px; font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+    .ropt .dots { display: flex; gap: 5px; margin-bottom: 12px; }
+    .ropt .dots i, .rc .dots i { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.15); }
+    .ropt .dots i.on, .rc .dots i.on { background: linear-gradient(135deg, #a78bfa, #ec4899); }
+    .rskip { margin-top: 16px; font: 800 14px "Inter Tight", sans-serif; color: var(--muted); background: none; border: 0; cursor: pointer; padding: 6px 0; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(255,255,255,.2); }
+    .rskip:hover { color: var(--ink); }
+    .rfold { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+    .rf { position: relative; text-align: left; font: inherit; color: var(--ink); border: 1px solid var(--line); border-radius: 6px 22px 22px 22px; padding: 18px 18px 16px; background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); cursor: pointer; transition: transform .25s, border-color .25s; animation: pop .35s ease-out both; }
+    .rf::before { content: ""; position: absolute; left: -1px; top: -9px; width: 46%; height: 10px; border: 1px solid var(--line); border-bottom: 0; border-radius: 8px 12px 0 0; background: rgba(255,255,255,.06); }
+    .rf:hover { transform: translateY(-3px); border-color: rgba(167,139,250,.55); }
+    .rf .ics { display: flex; gap: 6px; color: #c4b5fd; margin-bottom: 14px; }
+    .rf .ics svg { width: 26px; height: 26px; }
+    .rf b { display: block; font-size: 21px; font-weight: 900; letter-spacing: -.02em; line-height: 1.1; }
+    .rf span { display: block; margin-top: 6px; font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+    .rgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+    .rc { position: relative; display: flex; gap: 16px; align-items: center; text-align: left; font: inherit; color: var(--ink); border-radius: 22px; padding: 18px; background: var(--card); border: 1px solid var(--line); cursor: pointer; transition: transform .25s, border-color .25s, background .25s; animation: pop .35s ease-out both; }
+    .rc:hover { transform: translateY(-3px); border-color: rgba(167, 139, 250, .5); background: rgba(139, 92, 246, .08); }
+    .rc .ic { flex: none; width: 62px; height: 62px; border-radius: 18px; display: grid; place-items: center; color: #e9e2ff; background: linear-gradient(135deg, rgba(139,92,246,.35), rgba(236,72,153,.22)); }
+    .rc .ic svg { width: 38px; height: 38px; }
+    .rc b { display: block; font-size: 20px; font-weight: 900; letter-spacing: -.02em; line-height: 1.12; text-wrap: balance; }
+    .rc .meta { display: flex; align-items: center; gap: 10px; margin-top: 8px; font-size: 13px; color: var(--dim); font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+    .rc .dots { display: flex; gap: 4px; }
+    .rc .dots i { width: 6px; height: 6px; }
+    .rc.added::after { content: "✓"; position: absolute; top: 10px; right: 12px; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: #15803d; font-size: 13px; font-weight: 900; }
+    .rhead { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .rhead h3 { margin: 6px 0 0; }
+    .rnone { color: var(--muted); margin-top: 6px; font-weight: 700; }
+    .lpill { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 60; display: none; align-items: center; gap: 10px; font: 900 16px "Inter Tight", sans-serif; color: #17132a; background: #fff; border: 0; border-radius: 999px; padding: 13px 22px; box-shadow: 0 20px 50px -10px rgba(0,0,0,.6); cursor: pointer; }
+    .lpill b { min-width: 26px; height: 26px; border-radius: 13px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, #8b5cf6, #ec4899); font-size: 14px; padding: 0 7px; }
+    .lpill.on { display: flex; animation: up .35s; }
+    .lpill.bump b { animation: bump .5s; }
+    @keyframes bump { 40% { transform: scale(1.35); } }
+    .wapp { display: none; }
+    @media (max-width: 520px) {
+      .brand small { display: none; }
+      .tool-tabs button { font-size: 14px; padding: 10px 14px; }
+      .ropt { padding: 16px 18px; }
+      .ropt small { margin-top: 8px; }
+      .rc { padding: 14px; gap: 14px; }
+      .rc .ic { width: 54px; height: 54px; }
+      .rfold { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .rf { padding: 14px 14px 12px; }
+      .rf b { font-size: 17px; }
+      .rf .ics svg { width: 22px; height: 22px; }
+    }
+    @media (pointer: coarse) { .wapp { display: inline-flex; } }
+    .rmodal { position: fixed; inset: 0; z-index: 70; background: rgba(4, 3, 8, .7); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: grid; place-items: center; padding: 16px; animation: fade .25s; }
+    .rmodal[hidden] { display: none; }
+    @keyframes fade { from { opacity: 0; } }
+    .rsheet { position: relative; width: min(520px, 100%); max-height: 92vh; overflow: auto; background: #f5f3fb; color: #17132a; border-radius: 28px; padding: 24px; box-shadow: 0 40px 100px rgba(0,0,0,.6); animation: up .35s cubic-bezier(.2,.8,.2,1); }
+    @keyframes up { from { transform: translateY(30px); opacity: 0; } }
+    @media (max-width: 600px) { .rmodal { place-items: end center; padding: 0; } .rsheet { border-radius: 28px 28px 0 0; padding-bottom: calc(24px + env(safe-area-inset-bottom)); } }
+    .rclose { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: #e9e4f6; font-size: 22px; cursor: pointer; color: #17132a; }
+    .rmhead { display: flex; gap: 14px; align-items: center; padding-right: 40px; }
+    .rmhead .em { flex: none; width: 64px; height: 64px; border-radius: 20px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, #8b5cf6, #ec4899); }
+    .rmhead .em svg { width: 40px; height: 40px; }
+    .rmhead b { display: block; font-size: 26px; font-weight: 900; letter-spacing: -.02em; line-height: 1.15; }
+    .rmhead span { display: block; color: #6b6585; font-size: 14px; font-weight: 700; }
+    .serv { display: flex; align-items: center; justify-content: space-between; background: #fff; border-radius: 18px; padding: 12px 14px; margin: 18px 0 12px; font-weight: 800; }
+    .step2 { display: flex; align-items: center; gap: 14px; }
+    .step2 button { width: 38px; height: 38px; border-radius: 12px; border: 0; background: #f1ebff; color: #6d28d9; font-size: 22px; font-weight: 800; cursor: pointer; }
+    .step2 b { min-width: 24px; text-align: center; font-size: 22px; font-weight: 900; }
+    .rmlist { background: #fff; border-radius: 18px; padding: 2px 14px; }
+    .rmi { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0edf7; cursor: pointer; font-weight: 800; }
+    .rmi:last-child { border-bottom: 0; }
+    .rmi img { width: 30px; height: 30px; padding: 4px; border-radius: 9px; background: #f3effc; }
+    .rmi .nm { flex: 1; }
+    .rmi .am { color: #6d28d9; font-weight: 900; white-space: nowrap; }
+    .rmi .cb { width: 24px; height: 24px; border-radius: 7px; border: 2px solid #cfc9de; display: grid; place-items: center; flex: none; }
+    .rmi.on .cb { background: #8b5cf6; border-color: #8b5cf6; }
+    .rmi.on .cb::after { content: ""; width: 10px; height: 5px; border: solid #fff; border-width: 0 0 2px 2px; transform: rotate(-45deg) translate(1px, -1px); }
+    .rmi:not(.on) .nm, .rmi:not(.on) .am { opacity: .4; text-decoration: line-through; }
+    .rmhint { font-size: 13px; color: #8d87a3; font-weight: 600; margin: 10px 4px 14px; }
+    .rmadd { width: 100%; border: 0; border-radius: 16px; padding: 16px; font: 800 17px "Inter Tight", sans-serif; color: #fff; background: linear-gradient(95deg, #8b5cf6, #ec4899); cursor: pointer; }
+    .wrow .q { color: #6d28d9; font-weight: 900; font-size: 14px; white-space: nowrap; }
 
     /* kako deluje */
     .steps { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); margin-top: 48px; }
@@ -400,36 +482,45 @@
 
   <section id="orodja">
     <div class="wrap">
-      <p class="eyebrow rv"><span data-sl>Preizkusi kar tukaj</span><span data-en>Try it right here</span></p>
-      <h2 class="h rv"><span data-sl>Uporabno že<br><span class="grad">v brskalniku.</span></span><span data-en>Useful right<br><span class="grad">in your browser.</span></span></h2>
+      <p class="eyebrow rv"><span data-sl>Kuhaj in nakupuj</span><span data-en>Cook and shop</span></p>
+      <h2 class="h rv"><span data-sl>Kaj boš<br><span class="grad">kuhal danes?</span></span><span data-en>What are you<br><span class="grad">cooking today?</span></span></h2>
       <div class="tool-tabs rv" role="tablist">
-        <button type="button" role="tab" aria-selected="true" data-tool="tList"><span data-sl>🛒 Moj seznam</span><span data-en>🛒 My list</span></button>
+        <button type="button" role="tab" aria-selected="true" data-tool="tList"><span data-sl>🍳 Recepti in seznam</span><span data-en>🍳 Recipes & list</span></button>
         <button type="button" role="tab" aria-selected="false" data-tool="tNear"><span data-sl>📍 Odprte trgovine</span><span data-en>📍 Open stores</span></button>
       </div>
 
-      <div class="tool rv" id="tList">
-        <div class="panel">
-          <div class="wl-top"><b id="wlCount">0</b><span><span data-sl>za kupiti</span><span data-en>to buy</span></span></div>
-          <form class="wl-add" id="wlForm" autocomplete="off">
-            <input id="wlIn" type="text" enterkeyhint="done" aria-label="Izdelek">
-            <button type="submit" aria-label="Dodaj">+</button>
-            <div class="sugg" id="sugg" hidden></div>
-          </form>
-          <div class="cheap" id="cheap" hidden></div>
-          <div class="wl-list" id="wlList"></div>
-          <div class="acts" id="wlActs" hidden>
-            <button type="button" class="pri" id="wlShare"><span data-sl>📤 Pošlji na telefon</span><span data-en>📤 Send to phone</span></button>
-            <a id="wlWa" target="_blank" rel="noopener">WhatsApp</a>
-            <button type="button" id="wlCopy"><span data-sl>Kopiraj</span><span data-en>Copy</span></button>
-            <button type="button" id="wlDone"><span data-sl>Pobriši kupljeno</span><span data-en>Clear bought</span></button>
-            <button type="button" id="wlClear"><span data-sl>Pobriši vse</span><span data-en>Clear all</span></button>
+      <div class="kuh rv" id="tList">
+        <div class="rbox" id="jedi">
+          <div class="rsearch">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="rq" type="search" autocomplete="off">
           </div>
+          <div id="rflow"></div>
         </div>
-        <div class="side qrside">
-          <h3 data-sl>Na telefon v sekundi</h3><h3 data-en>To your phone in a second</h3>
-          <p data-sl>Skeniraj kodo s kamero telefona in seznam se odpre na telefonu.</p><p data-en>Scan the code with your phone camera and the list opens on your phone.</p>
-          <div class="qr" id="qr"><span data-sl>Dodaj izdelke in tu se pokaže koda.</span><span data-en>Add items and the code appears here.</span></div>
-          <p class="small" data-sl>Seznam ostane shranjen tudi v tem brskalniku.</p><p class="small" data-en>The list also stays saved in this browser.</p>
+        <div class="kuh-side">
+          <div class="panel" id="wlPanel">
+            <div class="wl-top"><b id="wlCount">0</b><span><span data-sl>za kupiti</span><span data-en>to buy</span></span></div>
+            <form class="wl-add" id="wlForm" autocomplete="off">
+              <input id="wlIn" type="text" enterkeyhint="done" aria-label="Izdelek">
+              <button type="submit" aria-label="Dodaj">+</button>
+              <div class="sugg" id="sugg" hidden></div>
+            </form>
+            <div class="cheap" id="cheap" hidden></div>
+            <div class="wl-list" id="wlList"></div>
+            <div class="acts" id="wlActs" hidden>
+              <a class="pri wapp" id="wlApp" href="#"><span data-sl>📲 Dodaj v Nakupko</span><span data-en>📲 Add to Nakupko</span></a>
+              <button type="button" id="wlShare"><span data-sl>📤 Pošlji na telefon</span><span data-en>📤 Send to phone</span></button>
+              <a id="wlWa" target="_blank" rel="noopener">WhatsApp</a>
+              <button type="button" id="wlCopy"><span data-sl>Kopiraj</span><span data-en>Copy</span></button>
+              <button type="button" id="wlDone"><span data-sl>Pobriši kupljeno</span><span data-en>Clear bought</span></button>
+              <button type="button" id="wlClear"><span data-sl>Pobriši vse</span><span data-en>Clear all</span></button>
+            </div>
+          </div>
+          <div class="side qrside">
+            <h3 data-sl>Na telefon v sekundi</h3><h3 data-en>To your phone in a second</h3>
+            <div class="qr" id="qr"><span data-sl>Dodaj izdelke in tu se pokaže koda.</span><span data-en>Add items and the code appears here.</span></div>
+            <p class="small" data-sl>Skeniraj s kamero telefona. Seznam ostane shranjen tudi v tem brskalniku.</p><p class="small" data-en>Scan with your phone camera. The list also stays saved in this browser.</p>
+          </div>
         </div>
       </div>
 
@@ -447,21 +538,6 @@
           <p data-sl>Tvoja lokacija ostane v brskalniku in se nikamor ne pošlje.</p><p data-en>Your location stays in your browser and is never sent anywhere.</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section id="jedi" style="padding-top:0">
-    <div class="wrap">
-      <p class="eyebrow rv"><span data-sl>Recepti</span><span data-en>Recipes</span></p>
-      <h2 class="h rv"><span data-sl>Kaj boš <span class="grad">kuhal?</span></span><span data-en>What's <span class="grad">cooking?</span></span></h2>
-      <p class="lead rv"><span data-sl>Izberi jed in sestavine gredo naravnost na tvoj seznam.</span><span data-en>Pick a dish and its ingredients go straight to your list.</span></p>
-      <div class="rsearch rv">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input id="rq" type="search" autocomplete="off">
-      </div>
-      <div class="rgroups rv" id="rgroups"></div>
-      <div class="rgrid" id="rgrid"></div>
-      <p class="rnone" id="rnone" hidden><span data-sl>Ni zadetkov. Poskusi z drugo besedo, npr. »piscanec« ali »testenine«.</span><span data-en>No matches. Try another word, e.g. »chicken« or »pasta«.</span></p>
     </div>
   </section>
 
@@ -537,6 +613,18 @@
     </div>
   </footer>
   <div class="toast" id="toast"></div>
+  <button type="button" class="lpill" id="lpill"><span data-sl>Moj seznam</span><span data-en>My list</span><b id="lpillN">0</b></button>
+  <div class="rmodal" id="rmodal" hidden>
+    <div class="rsheet" role="dialog" aria-modal="true" aria-labelledby="rmTitle">
+      <button type="button" class="rclose" id="rmClose" aria-label="Zapri">×</button>
+      <div class="rmhead"><span class="em" id="rmEm" aria-hidden="true"></span><div><b id="rmTitle"></b><span id="rmMeta"></span></div></div>
+      <div class="serv"><span data-sl>Za koliko oseb?</span><span data-en>How many people?</span>
+        <div class="step2"><button type="button" id="rmMinus" aria-label="−">−</button><b id="rmN">4</b><button type="button" id="rmPlus" aria-label="+">+</button></div></div>
+      <div class="rmlist" id="rmList"></div>
+      <p class="rmhint" data-sl>Odkljukaj, kar že imaš doma.</p><p class="rmhint" data-en>Untick what you already have at home.</p>
+      <button type="button" class="rmadd" id="rmAdd"></button>
+    </div>
+  </div>
 
   <script>
   (function () {
@@ -719,13 +807,36 @@
     var CAT = [], BY = {}, CATS = [];
     var CAT_EN = { "Sadje in zelenjava": "Fruit & veg", "Mlečni izdelki": "Dairy", "Meso in ribe": "Meat & fish", "Kruh in pecivo": "Bakery", "Shramba": "Pantry", "Pijače": "Drinks", "Prigrizki": "Snacks", "Zamrznjeno": "Frozen", "Gospodinjstvo": "Household", "Higiena": "Hygiene", "Brez glutena": "Gluten free", "Ljubljenčki": "Pets", "Otroci": "Kids", "Zdravje": "Health", "Športna prehrana": "Sports nutrition", "Dom in vrt": "Home & garden", "Drugo": "Other" };
     var list = store("nk-web-list") || [];
+    var U = { g: ["g", "g"], kg: ["kg", "kg"], ml: ["ml", "ml"], l: ["l", "l"], kos: ["kos", "pc"], strok: ["str.", "clove"], "žlica": ["žl.", "tbsp"], "žlička": ["žlič.", "tsp"], "šopek": ["šop.", "bunch"], list: ["list.", "leaf"], "pločevinka": ["ploč.", "can"], kozarec: ["koz.", "jar"], vrečka: ["vreč.", "bag"], rezina: ["rez.", "slice"], zavitek: ["zav.", "pack"] };
+    function scaleAmt(a, u, f) {
+      if (!a) return null; var v = a * f;
+      if (u === "kg") { v *= 1000; u = "g"; } if (u === "l") { v *= 1000; u = "ml"; }
+      if (u === "g" || u === "ml") v = v < 100 ? Math.ceil(v / 5) * 5 : Math.ceil(v / 10) * 10;
+      else v = Math.max(1, Math.ceil(v * 2 - 0.25) / 2);
+      return [v, u];
+    }
+    function fmtAmt(m) {
+      if (!m) return "";
+      return Object.keys(m).map(function (u) {
+        var v = m[u], uu = u;
+        if (u === "g" && v >= 1000) { v = v / 1000; uu = "kg"; } if (u === "ml" && v >= 1000) { v = v / 1000; uu = "l"; }
+        var n = (Math.round(v * 10) / 10).toString().replace(".", L() === "en" ? "." : ",");
+        return n + " " + (U[uu] ? U[uu][L() === "en" ? 1 : 0] : uu);
+      }).join(" + ");
+    }
     function save() { store("nk-web-list", list); }
     function find(name) { return BY[norm(name)]; }
-    function add(name, quiet) {
+    function add(name, quiet, amt) {
       name = String(name || "").trim(); if (!name) return false;
       var p = find(name), key = norm(p ? p[0] : name);
-      if (list.some(function (x) { return norm(x.n) === key; })) { if (!quiet) toast(T("Že na seznamu", "Already on the list")); return false; }
-      list.push({ n: p ? p[0] : name.charAt(0).toUpperCase() + name.slice(1), d: false }); save(); return true;
+      var ex = list.filter(function (x) { return norm(x.n) === key && !x.d; })[0];
+      if (ex) {
+        if (amt) { ex.m = ex.m || {}; ex.m[amt[1]] = (ex.m[amt[1]] || 0) + amt[0]; save(); return true; }
+        if (!quiet) toast(T("Že na seznamu", "Already on the list")); return false;
+      }
+      var it = { n: p ? p[0] : name.charAt(0).toUpperCase() + name.slice(1), d: false };
+      if (amt) { it.m = {}; it.m[amt[1]] = amt[0]; }
+      list.push(it); save(); return true;
     }
     function nameOf(n) { var p = find(n); return L() === "en" && p ? p[1] : n; }
     function icon(n) { var p = find(n); return "img/i/" + (p ? p[3] : "shopping-cart") + ".svg"; }
@@ -734,27 +845,30 @@
       $("wlCount").textContent = open;
       $("wlIn").placeholder = T("Kaj moraš kupiti? npr. mleko", "What do you need? e.g. milk");
       $("wlActs").hidden = !list.length;
-      if (!list.length) { $("wlList").innerHTML = '<div class="empty"><i>🧺</i>' + T("Seznam je prazen. Dodaj izdelek ali spodaj izberi jed.", "Your list is empty. Add an item or pick a dish below.") + "</div>"; cheap(); qr(); recipes(); return; }
+      if (!list.length) { $("wlList").innerHTML = '<div class="empty"><i>🧺</i>' + T("Seznam je prazen. Dodaj izdelek ali izberi jed.", "Your list is empty. Add an item or pick a dish.") + "</div>"; cheap(); qr(); recipes(); pill(); return; }
       var groups = {};
       list.forEach(function (x, i) { var p = find(x.n), c = p ? p[2] : "Drugo"; (groups[c] = groups[c] || []).push(i); });
       var order = CATS.concat(["Drugo"]).filter(function (c) { return groups[c]; });
       $("wlList").innerHTML = order.map(function (c) {
         return '<div class="wcat">' + esc(L() === "en" ? (CAT_EN[c] || c) : c) + '</div><div class="wgrp">' + groups[c].map(function (i) {
           var x = list[i];
-          return '<div class="wrow' + (x.d ? " done" : "") + '" data-i="' + i + '"><img src="' + icon(x.n) + '" alt=""><span class="nm">' + esc(nameOf(x.n)) + '</span><button class="ck" type="button" aria-label="' + T("Kupljeno", "Bought") + '"></button><button class="x" type="button" aria-label="' + T("Odstrani", "Remove") + '">×</button></div>';
+          return '<div class="wrow' + (x.d ? " done" : "") + '" data-i="' + i + '"><img src="' + icon(x.n) + '" alt=""><span class="nm">' + esc(nameOf(x.n)) + '</span>' + (x.m ? '<span class="q">' + esc(fmtAmt(x.m)) + '</span>' : '') + '<button class="ck" type="button" aria-label="' + T("Kupljeno", "Bought") + '"></button><button class="x" type="button" aria-label="' + T("Odstrani", "Remove") + '">×</button></div>';
         }).join("") + "</div>";
       }).join("");
       $("wlWa").href = "https://wa.me/?text=" + encodeURIComponent(text());
-      cheap(); qr(); recipes();
+      cheap(); qr(); recipes(); pill();
     }
     $("wlList").onclick = function (e) {
       var r = e.target.closest(".wrow"); if (!r) return; var i = +r.dataset.i;
       if (e.target.classList.contains("x")) list.splice(i, 1); else list[i].d = !list[i].d;
       save(); render();
     };
-    function link() { return "https://nakupko.com/#s=" + list.filter(function (x) { return !x.d; }).map(function (x) { return encodeURIComponent(x.n); }).join("|"); }
+    function enc(x) { var a = x.m ? Object.keys(x.m).map(function (u) { return x.m[u] + " " + u; }).join("+") : ""; return x.n + (a ? "~" + a : ""); }
+    function openItems() { return list.filter(function (x) { return !x.d; }); }
+    function link() { return "https://nakupko.com/#s=" + openItems().map(function (x) { return encodeURIComponent(enc(x)); }).join("|"); }
+    function appLink() { return "nakupko://dodaj?i=" + encodeURIComponent(openItems().map(enc).join("|")); }
     function text() {
-      return T("🛒 Nakupovalni seznam:", "🛒 Shopping list:") + "\n" + list.filter(function (x) { return !x.d; }).map(function (x) { return "• " + nameOf(x.n); }).join("\n") + "\n\n" + T("Odpri seznam: ", "Open the list: ") + link();
+      return T("🛒 Nakupovalni seznam:", "🛒 Shopping list:") + "\n" + list.filter(function (x) { return !x.d; }).map(function (x) { return "• " + nameOf(x.n) + (x.m ? " (" + fmtAmt(x.m) + ")" : ""); }).join("\n") + "\n\n" + T("Odpri seznam: ", "Open the list: ") + link();
     }
     $("wlShare").onclick = function () {
       if (navigator.share) navigator.share({ title: "Nakupko", text: text() }).catch(function () {});
@@ -798,41 +912,121 @@
     document.addEventListener("click", function (e) { if (!e.target.closest(".wl-add")) $("sugg").hidden = true; });
 
     // ---------- recepti ----------
-    var REC = null, rgroup = "vse";
+    var REC = null, rt = null, rd = null, rm = null;
+    var CASI = [["t20", 0, 20, "Do 20 minut", "Up to 20 minutes", "Ko se mudi", "When you're in a hurry"],
+      ["t45", 21, 45, "Do 45 minut", "Up to 45 minutes", "Za vsak dan", "For every day"],
+      ["t90", 46, 90, "Do ure in pol", "Up to 1½ hours", "Ko imaš malo več časa", "When you have a bit more time"],
+      ["tvec", 91, 9999, "Več kot ura in pol", "Over 1½ hours", "Za vikend in praznike", "For weekends and holidays"]];
+    var TEZ = [[1, "Enostavno", "Easy", "Zmore vsak", "Anyone can do it"], [2, "Srednje", "Medium", "Nekaj izkušenj", "Some experience"], [3, "Zahtevno", "Challenging", "Za prave kuharje", "For real cooks"]];
+    function ico(k) { return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ((window.IKONE_JEDI || {})[k] || "") + "</svg>"; }
+    function mins(m) { if (m < 60) return m + " min"; var h = Math.floor(m / 60), r = m % 60; return h + " h" + (r ? " " + r + " min" : ""); }
+    function dots(n) { return '<span class="dots">' + [1, 2, 3].map(function (i) { return '<i class="' + (i <= n ? "on" : "") + '"></i>'; }).join("") + "</span>"; }
+    function tezName(n) { var t = TEZ[n - 1]; return L() === "en" ? t[2] : t[1]; }
+    function casOf(r) { return CASI.filter(function (c) { return r[3] >= c[1] && r[3] <= c[2]; })[0][0]; }
+    function pool(t, d, m) { return REC.jedi.map(function (r, i) { return i; }).filter(function (i) { var r = REC.jedi[i]; return (!t || t === "vse" || casOf(r) === t) && (!d || d === "vse" || r[4] === d) && (!m || r[5] === m); }); }
+    function cards(ids) {
+      return '<div class="rgrid">' + ids.map(function (i, k) {
+        var r = REC.jedi[i], has = r[6].every(function (x) { return list.some(function (y) { return norm(y.n) === norm(x[0]) && !y.d; }); });
+        return '<button type="button" class="rc' + (has ? " added" : "") + '" data-i="' + i + '" style="animation-delay:' + Math.min(k, 14) * .03 + 's"><span class="ic">' + ico(r[0]) + '</span><span><b>' + esc(L() === "en" ? r[2] : r[1]) + '</b><span class="meta">' + mins(r[3]) + dots(r[4]) + "</span></span></button>";
+      }).join("") + "</div>";
+    }
+    function step(k, h, body, skip) { return '<div class="rstep"><span class="k">' + k + "</span><h3>" + h + "</h3>" + body + (skip ? '<button type="button" class="rskip" data-skip="1">' + skip + "</button>" : "") + "</div>"; }
     function recipes() {
       if (!REC) return;
-      $("rq").placeholder = T("Išči jed ali sestavino, npr. piscanec, testenine …", "Search a dish or ingredient, e.g. chicken, pasta …");
-      var q = norm($("rq").value), words = q.split(" ").filter(Boolean);
-      var cnt = { vse: REC.jedi.length }; REC.jedi.forEach(function (r) { cnt[r[4]] = (cnt[r[4]] || 0) + 1; });
-      $("rgroups").innerHTML = [["vse", "✨ Vse", "✨ All"]].concat(REC.skupine).map(function (g) {
-        return '<button type="button" data-g="' + g[0] + '" aria-pressed="' + (rgroup === g[0]) + '">' + esc(L() === "en" ? g[2] : g[1]) + "<small>" + cnt[g[0]] + "</small></button>";
-      }).join("");
-      var gname = {}; REC.skupine.forEach(function (g) { gname[g[0]] = g; });
-      var res = REC.jedi.map(function (r, i) { return i; }).filter(function (i) {
-        var r = REC.jedi[i];
-        if (!words.length && rgroup !== "vse" && r[4] !== rgroup) return false;
-        if (!words.length) return true;
-        var hay = r.hay || (r.hay = norm([r[1], r[2], gname[r[4]][1], gname[r[4]][2]].concat(r[5], r[5].map(function (x) { var p = find(x); return p ? p[1] : ""; })).join(" ")));
-        return words.every(function (w) { return hay.indexOf(w) >= 0; });
-      });
-      $("rnone").hidden = res.length > 0;
-      $("rgrid").innerHTML = res.map(function (i, k) {
-        var r = REC.jedi[i], has = r[5].every(function (x) { return list.some(function (y) { return norm(y.n) === norm(x); }); });
-        var t = r[3] >= 60 ? (r[3] / 60).toString().replace(".", L() === "en" ? "." : ",") + " h" : r[3] + " min";
-        return '<button type="button" class="rc' + (has ? " added" : "") + '" data-i="' + i + '" style="animation-delay:' + Math.min(k, 12) * .03 + 's"><span class="em">' + r[0] + '</span><span class="add">' + (has ? "✓" : "+") + "</span><b>" + esc(L() === "en" ? r[2] : r[1]) +
-          '</b><span class="meta">⏱ ' + t + " · " + r[5].length + T(" sestavin", " ingredients") + '</span><span class="ing">' + esc(r[5].map(nameOf).join(", ")) + "</span></button>";
-      }).join("");
+      $("rq").placeholder = T(innerWidth < 520 ? "Poišči jed ali sestavino" : "Poišči jed ali sestavino, npr. piscanec …", innerWidth < 520 ? "Search a dish or ingredient" : "Search a dish or ingredient, e.g. chicken …");
+      var q = norm($("rq").value), words = q.split(" ").filter(Boolean), h = "", en = L() === "en";
+      if (words.length) {
+        var mapa = {}; REC.mape.forEach(function (m) { mapa[m[0]] = m; });
+        var res = REC.jedi.map(function (r, i) { return i; }).filter(function (i) {
+          var r = REC.jedi[i];
+          var hay = r.hay || (r.hay = norm([r[1], r[2], mapa[r[5]][1], mapa[r[5]][2]].concat(r[6].map(function (x) { var p = find(x[0]); return x[0] + " " + (p ? p[1] : ""); })).join(" ")));
+          return words.every(function (w) { return hay.indexOf(w.length >= 6 ? w.slice(0, -2) : w) >= 0; });
+        });
+        h = step(T("Iskanje", "Search"), res.length + " " + T(res.length === 1 ? "jed" : res.length === 2 ? "jedi" : "jedi", res.length === 1 ? "dish" : "dishes"), res.length ? cards(res) : '<p class="rnone">' + T("Ni zadetkov. Poskusi z drugo besedo, npr. »testenine« ali »juha«.", "No matches. Try another word, e.g. »pasta« or »soup«.") + "</p>");
+        $("rflow").innerHTML = h; return;
+      }
+      var cr = [];
+      if (rt) cr.push(["t", rt === "vse" ? T("Ves čas", "Any time") : (function () { var c = CASI.filter(function (c) { return c[0] === rt; })[0]; return en ? c[4] : c[3]; })()]);
+      if (rd) cr.push(["d", rd === "vse" ? T("Vsa zahtevnost", "Any level") : tezName(rd)]);
+      if (rm) cr.push(["m", REC.mape.filter(function (m) { return m[0] === rm; })[0][en ? 2 : 1]]);
+      if (cr.length) h += '<div class="rcrumbs">' + cr.map(function (c) { return '<button type="button" data-back="' + c[0] + '">' + esc(c[1]) + "</button>"; }).join("") + "</div>";
+      if (!rt) {
+        h += step(T("Korak 1 od 3", "Step 1 of 3"), T("Koliko časa imaš?", "How much time do you have?"), '<div class="ropts">' + CASI.map(function (c, k) {
+          var n = pool(c[0]).length;
+          return '<button type="button" class="ropt" data-t="' + c[0] + '" style="animation-delay:' + k * .05 + 's"><b>' + (en ? c[4] : c[3]) + "</b><span>" + (en ? c[6] : c[5]) + "</span><small>" + n + T(" jedi", " dishes") + "</small></button>";
+        }).join("") + "</div>", T("Vseeno mi je, pokaži vse", "I don't mind, show everything"));
+      } else if (!rd) {
+        h += step(T("Korak 2 od 3", "Step 2 of 3"), T("Kako zahtevno naj bo?", "How challenging?"), '<div class="ropts">' + TEZ.map(function (t, k) {
+          var n = pool(rt, t[0]).length; if (!n) return "";
+          return '<button type="button" class="ropt" data-d="' + t[0] + '" style="animation-delay:' + k * .05 + 's">' + dots(t[0]) + "<b>" + (en ? t[2] : t[1]) + "</b><span>" + (en ? t[4] : t[3]) + "</span><small>" + n + T(" jedi", " dishes") + "</small></button>";
+        }).join("") + "</div>", T("Vseeno, pokaži vse", "Doesn't matter, show all"));
+      } else if (!rm) {
+        h += step(T("Korak 3 od 3", "Step 3 of 3"), T("Na kaj imaš danes apetit?", "What are you in the mood for?"), '<div class="rfold">' + REC.mape.map(function (m, k) {
+          var ids = pool(rt, rd, m[0]); if (!ids.length) return "";
+          var seen = {}, ics = ids.map(function (i) { return REC.jedi[i][0]; }).filter(function (x) { return seen[x] ? false : (seen[x] = 1); }).slice(0, 3);
+          return '<button type="button" class="rf" data-m="' + m[0] + '" style="animation-delay:' + k * .04 + 's"><span class="ics">' + ics.map(ico).join("") + "</span><b>" + esc(en ? m[2] : m[1]) + "</b><span>" + ids.length + T(ids.length === 1 ? " jed" : " jedi", ids.length === 1 ? " dish" : " dishes") + "</span></button>";
+        }).join("") + "</div>");
+      } else {
+        var mm = REC.mape.filter(function (m) { return m[0] === rm; })[0];
+        h += step(T("Izberi jed", "Pick a dish"), esc(en ? mm[2] : mm[1]), cards(pool(rt, rd, rm)));
+      }
+      $("rflow").innerHTML = h;
     }
-    $("rgroups").onclick = function (e) { var b = e.target.closest("button"); if (!b) return; rgroup = b.dataset.g; $("rq").value = ""; recipes(); };
+    $("rflow").onclick = function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      if (b.dataset.i) { cur = REC.jedi[+b.dataset.i]; off = {}; drawModal(); $("rmodal").hidden = false; document.body.style.overflow = "hidden"; return; }
+      if (b.dataset.t) rt = b.dataset.t; else if (b.dataset.d) rd = +b.dataset.d; else if (b.dataset.m) rm = b.dataset.m;
+      else if (b.dataset.skip) { if (!rt) rt = "vse"; else rd = "vse"; }
+      else if (b.dataset.back) { var k = b.dataset.back; if (k === "t") { rt = rd = rm = null; } else if (k === "d") { rd = rm = null; } else rm = null; }
+      recipes();
+      var top = $("jedi").getBoundingClientRect().top; if (top < 0) $("jedi").scrollIntoView({ behavior: "smooth" });
+    };
     $("rq").oninput = recipes;
-    $("rgrid").onclick = function (e) {
-      var b = e.target.closest(".rc"); if (!b) return;
-      var r = REC.jedi[+b.dataset.i], n = 0;
-      r[5].forEach(function (x) { if (add(x, true)) n++; });
-      render(); recipes();
-      toast(n ? T("Na seznam dodano: " + n + " sestavin", "Added " + n + " ingredients to your list") : T("Vse je že na seznamu", "Everything is already on the list"));
+    var cur = null, servings = store("nk-osebe") || 4, off = {};
+    function drawModal() {
+      var r = cur, f = servings / 4;
+      $("rmEm").innerHTML = ico(r[0]); $("rmTitle").textContent = L() === "en" ? r[2] : r[1];
+      $("rmMeta").textContent = mins(r[3]) + " · " + tezName(r[4]) + " · " + r[6].length + T(" sestavin", " ingredients");
+      $("rmN").textContent = servings;
+      $("rmList").innerHTML = r[6].map(function (g, i) {
+        var a = scaleAmt(g[1], g[2], f), m = {}; if (a) m[a[1]] = a[0];
+        return '<div class="rmi' + (off[i] ? "" : " on") + '" data-i="' + i + '"><span class="cb"></span><img src="' + icon(g[0]) + '" alt=""><span class="nm">' + esc(nameOf(g[0])) + '</span><span class="am">' + (a ? esc(fmtAmt(m)) : T("po okusu", "to taste")) + "</span></div>";
+      }).join("");
+      var n = r[6].filter(function (g, i) { return !off[i]; }).length;
+      $("rmAdd").textContent = T("Dodaj na seznam (" + n + ")", "Add to list (" + n + ")");
+      $("rmAdd").disabled = !n;
+    }
+    function closeModal() { $("rmodal").hidden = true; document.body.style.overflow = ""; }
+    $("rmClose").onclick = closeModal;
+    $("rmodal").onclick = function (e) { if (e.target === this) closeModal(); };
+    addEventListener("keydown", function (e) { if (e.key === "Escape" && !$("rmodal").hidden) closeModal(); });
+    $("rmMinus").onclick = function () { servings = Math.max(1, servings - 1); store("nk-osebe", servings); drawModal(); };
+    $("rmPlus").onclick = function () { servings = Math.min(20, servings + 1); store("nk-osebe", servings); drawModal(); };
+    $("rmList").onclick = function (e) { var r = e.target.closest(".rmi"); if (!r) return; off[+r.dataset.i] = !off[+r.dataset.i]; drawModal(); };
+    $("rmAdd").onclick = function () {
+      var n = 0, f = servings / 4;
+      cur[6].forEach(function (g, i) { if (off[i]) return; if (add(g[0], true, scaleAmt(g[1], g[2], f))) n++; });
+      closeModal(); render();
+      toast(T("Na seznam dodano: " + n + " sestavin za " + servings + (servings === 1 ? " osebo" : servings === 2 ? " osebi" : servings < 5 ? " osebe" : " oseb"), "Added " + n + " ingredients for " + servings));
+      var pl = $("lpill"); pl.classList.remove("bump"); void pl.offsetWidth; pl.classList.add("bump");
     };
     fetch("data/recepti.json").then(function (r) { return r.json(); }).then(function (d) { REC = d; recipes(); });
+
+    // plavajoča košarica na telefonu
+    var seeKuh = false, seePanel = false;
+    function pill() { var n = openItems().length; $("lpillN").textContent = n; var on = innerWidth <= 900 && seeKuh && !seePanel && n > 0; $("lpill").classList.toggle("on", on); document.body.classList.toggle("pill-on", on); }
+    new IntersectionObserver(function (es) { es.forEach(function (x) { if (x.target.id === "jedi") seeKuh = x.isIntersecting; else seePanel = x.isIntersecting; }); pill(); }).observe($("jedi"));
+    new IntersectionObserver(function (es) { seePanel = es[0].isIntersecting; pill(); }).observe($("wlPanel"));
+    $("lpill").onclick = function () { $("wlPanel").scrollIntoView({ behavior: "smooth", block: "start" }); };
+
+    // dodaj v aplikacijo (telefon)
+    $("wlApp").onclick = function (e) {
+      e.preventDefault(); if (!openItems().length) return;
+      var t = setTimeout(function () { if (!document.hidden) { toast(T("Nimaš še Nakupka? Prenesi ga brezplačno.", "Don't have Nakupko yet? Get it for free.")); $("prenos").scrollIntoView({ behavior: "smooth" }); } }, 1800);
+      addEventListener("pagehide", function () { clearTimeout(t); }, { once: true });
+      document.addEventListener("visibilitychange", function () { if (document.hidden) clearTimeout(t); }, { once: true });
+      location.href = appLink();
+    };
 
     // ---------- QR koda ----------
     function qr() {
@@ -969,13 +1163,20 @@
       });
       var m = location.hash.match(/^#s=(.*)$/);
       if (m) {
-        var n = 0; m[1].split("|").map(function (x) { try { return decodeURIComponent(x); } catch (e) { return x; } }).forEach(function (x) { if (add(x, true)) n++; });
+        var n = 0; m[1].split("|").map(function (x) { try { return decodeURIComponent(x); } catch (e) { return x; } }).forEach(function (x) {
+          var parts = x.split("~"), nm = parts[0], ok = false;
+          if (parts[1]) parts[1].split("+").forEach(function (a) { var t = a.trim().split(" "); if (+t[0] && t[1]) { if (add(nm, true, [+t[0], t[1]])) ok = true; } });
+          else ok = add(nm, true);
+          if (ok) n++;
+        });
+        fromLink = true;
         history.replaceState(null, "", location.pathname + location.search);
-        setTimeout(function () { $("orodja").scrollIntoView(); toast(T("Seznam odprt ✓", "List opened ✓")); }, 400);
+        setTimeout(function () { var tel = matchMedia("(pointer: coarse)").matches; $(tel ? "wlPanel" : "orodja").scrollIntoView(); toast(tel ? T("Seznam odprt. Pritisni »Dodaj v Nakupko«.", "List opened. Tap »Add to Nakupko«.") : T("Seznam odprt ✓", "List opened ✓")); }, 400);
       }
       render();
     });
-    function all() { recipes(); render(); today(); showNear(); }
+    var fromLink = false;
+    function all() { recipes(); render(); today(); showNear(); if (!$("rmodal").hidden) drawModal(); }
     new MutationObserver(all).observe(root, { attributes: true, attributeFilter: ["lang"] });
     recipes(); today();
   })();
