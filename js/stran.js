@@ -16,7 +16,7 @@
 
   // galerija in ticker
   var gal = document.getElementById("gal"), gh = "";
-  if (gal) {
+  if (gal && !matchMedia("(max-width: 900px), (pointer: coarse)").matches) {
     for (var r = 0; r < 6; r++) for (var i = 1; i <= 4; i++) gh += '<img data-n="' + i + '" alt="" loading="lazy">';
     gal.innerHTML = gh;
   }

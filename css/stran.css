@@ -500,3 +500,22 @@ h2.h { margin-bottom: 30px; }
 .side p { font-size: 18px; }
 .free { font-size: 16px; color: var(--muted); }
 .nav nav a { font-size: 16px; }
+
+/* Telefon (2026-10-23): brez dragih učinkov in manj vsebine, da stran ne zatika */
+@media (max-width: 900px), (pointer: coarse) {
+  .aura i { animation: none; filter: none; will-change: auto; opacity: .35; }
+  .final .orb { animation: none; filter: none; opacity: .3; }
+  .nav.solid { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(var(--bgrgb), .96); }
+  .halo, .ring { animation: none; }
+  .feat::after { filter: none; }
+  .promo .pl { animation: none; }
+  .dnevni .dic { animation: none; }
+  .qrside, .galsec { display: none !important; }
+  .tool { grid-template-columns: 1fr; }
+  .device { width: min(280px, 66vw); }
+  .rv { transition-duration: .5s; transform: translateY(14px); }
+  section { padding: 72px 0; }
+  .ob .obj:nth-of-type(n+4) { display: none; }
+  .fam { display: none; }
+  .obj b { font-size: 17px; }
+}
