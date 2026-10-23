@@ -482,3 +482,21 @@ footer a:hover { color: var(--ink); }
 .ob-more { grid-column: 1 / -1; justify-self: center; background: none; border: 1px solid var(--line); color: var(--muted); border-radius: 999px; padding: 10px 20px; font: 700 15px "Inter Tight", sans-serif; cursor: pointer; }
 .ob-more:hover { color: var(--ink); border-color: rgba(167,139,250,.5); }
 @media (max-width: 800px) { .obroki { grid-template-columns: 1fr; } }
+
+/* Preglednost (2026-10-23): večji, bolj berljivi napisi, več zraka */
+body { font-size: 19px; }
+section { padding: clamp(88px, 15vh, 180px) 0; }
+.eyebrow { font-size: 15px; color: var(--muted); }
+.lead { font-size: clamp(21px, 2vw, 30px); line-height: 1.4; max-width: 680px; }
+h2.h { margin-bottom: 30px; }
+.step { padding: clamp(28px, 3vw, 48px); }
+.step h3 { font-size: clamp(26px, 2.4vw, 36px); }
+.step p { font-size: clamp(18px, 1.4vw, 21px); }
+.feats { gap: 20px; }
+.feat { padding: clamp(28px, 2.8vw, 40px); }
+.feat h3 { font-size: clamp(24px, 2.2vw, 32px); }
+.feat p { font-size: clamp(18px, 1.4vw, 21px); }
+.side h3 { font-size: 26px; }
+.side p { font-size: 18px; }
+.free { font-size: 16px; color: var(--muted); }
+.nav nav a { font-size: 16px; }
