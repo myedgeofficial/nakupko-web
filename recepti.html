@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Recepti – Nakupko</title>
-  <meta name="description" content="252 receptov od hitrih do nedeljskih. Izberi, za koliko oseb kuhaš, in sestavine s količinami gredo na nakupovalni seznam.">
+  <meta name="description" content="237 receptov od hitrih do nedeljskih. Izberi, za koliko oseb kuhaš, in sestavine s količinami gredo na nakupovalni seznam.">
   <meta name="theme-color" content="#07060b">
   <meta property="og:title" content="Recepti · Nakupko">
-  <meta property="og:description" content="252 receptov s količinami za toliko oseb, kot jih kuhaš.">
+  <meta property="og:description" content="237 receptov s količinami za toliko oseb, kot jih kuhaš.">
   <meta property="og:image" content="https://nakupko.com/img/ikona-512.png">
   <meta name="apple-itunes-app" content="app-id=6818745132">
   <link rel="icon" href="img/ikona.svg" type="image/svg+xml">
@@ -41,9 +41,9 @@
       <div>
         <p class="eyebrow rv"><span data-sl>Recepti Nakupko</span><span data-en>Nakupko recipes</span></p>
         <h1 class="h rv" style="--d:.08s"><span data-sl>Kuhaj brez<br><span class="grad">razmišljanja.</span></span><span data-en>Cook without<br><span class="grad">overthinking.</span></span></h1>
-        <p class="lead rv" style="--d:.16s"><span data-sl>252 jedi, od 10-minutnih večerij do nedeljske potice. Povej, koliko časa imaš in za koliko oseb kuhaš. Količine gredo same na tvoj seznam.</span><span data-en>252 dishes, from 10-minute dinners to Sunday baking. Tell us how much time you have and how many you're cooking for. The amounts go straight onto your list.</span></p>
+        <p class="lead rv" style="--d:.16s"><span data-sl>237 jedi, od 10-minutnih večerij do nedeljske potice. Povej, koliko časa imaš in za koliko oseb kuhaš. Količine gredo same na tvoj seznam.</span><span data-en>237 dishes, from 10-minute dinners to Sunday baking. Tell us how much time you have and how many you're cooking for. The amounts go straight onto your list.</span></p>
         <div class="rstats rv" style="--d:.24s">
-          <div><b class="cu" data-to="252">0</b><span data-sl>jedi</span><span data-en>dishes</span></div>
+          <div><b class="cu" data-to="237">0</b><span data-sl>jedi</span><span data-en>dishes</span></div>
           <div><b class="cu" data-to="11">0</b><span data-sl>map</span><span data-en>folders</span></div>
           <div><b>1–20</b><span data-sl>oseb</span><span data-en>people</span></div>
         </div>
@@ -76,6 +76,7 @@
               <div class="sugg" id="sugg" hidden></div>
             </form>
             <div class="cheap" id="cheap" hidden></div>
+            <div class="moji" id="wlMoji" hidden></div>
             <div class="wl-list" id="wlList"></div>
             <div class="acts" id="wlActs" hidden>
               <a class="pri wapp" id="wlApp" href="#"><span data-sl>📲 Odpri v Nakupku</span><span data-en>📲 Open in Nakupko</span></a>
@@ -138,7 +139,19 @@
       <div class="rmlist" id="rmList"></div>
       <p class="rmhint" data-sl>Odkljukaj, kar že imaš doma.</p><p class="rmhint" data-en>Untick what you already have at home.</p>
       <button type="button" class="rmadd" id="rmAdd"></button>
+      <button type="button" class="rmcook" id="rmCook"><span data-sl>Kuhaj po korakih ›</span><span data-en>Cook step by step ›</span></button>
     </div>
+  </div>
+
+  <div class="kuhaj" id="kuhaj" hidden role="dialog" aria-modal="true" aria-labelledby="khName">
+    <div class="kh-top"><button type="button" class="kh-x" id="khX" aria-label="Zapri">×</button><b id="khName"></b><span id="khCnt"></span></div>
+    <div class="kh-bar"><i id="khBar"></i></div>
+    <div class="kh-body">
+      <div class="kh-k" id="khK"></div>
+      <p class="kh-step" id="khStep"></p>
+      <details class="kh-ing"><summary><span data-sl>Sestavine</span><span data-en>Ingredients</span> <span id="khOs"></span></summary><div id="khIng"></div></details>
+    </div>
+    <div class="kh-nav"><button type="button" id="khPrev"><span data-sl>‹ Nazaj</span><span data-en>‹ Back</span></button><button type="button" id="khNext"></button></div>
   </div>
 
   <script src="js/stran.js"></script>
