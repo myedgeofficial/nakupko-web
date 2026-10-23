@@ -71,7 +71,6 @@
         return '<div class="wrow' + (x.d ? " done" : "") + '" data-i="' + i + '"><img src="' + icon(x.n) + '" alt=""><span class="nm">' + esc(nameOf(x.n)) + '</span>' + (x.m ? '<span class="q">' + esc(fmtAmt(x.m)) + '</span>' : '') + '<button class="ck" type="button" aria-label="' + T("Kupljeno", "Bought") + '"></button><button class="x" type="button" aria-label="' + T("Odstrani", "Remove") + '">×</button></div>';
       }).join("") + "</div>";
     }).join("");
-    $("wlWa").href = "https://wa.me/?text=" + encodeURIComponent(text());
     cheap(); qr(); recipes(); pill(); moji();
   }
   $("wlList").onclick = function (e) {
@@ -306,20 +305,27 @@
       box.dataset.i = di;
       box.innerHTML = '<span class="dk">' + T("Predlog dneva", "Dish of the day") + '</span><span class="dic">' + ico(r[0]) + "</span><b>" + esc(en ? r[2] : r[1]) + '</b><span class="dm">' + mins(r[3]) + " · " + tezName(r[4]) + " · " + r[6].length + T(" sestavin", " ingredients") + '</span><span class="dgo">' + T("Poglej recept", "View recipe") + " →</span>";
     }
-    var traks = document.querySelectorAll(".dtrak"), nT = traks.length;
-    traks.forEach(function (t, k) {
-      var ids = shuffle(REC.jedi.map(function (r, i) { return i; }).filter(function (i) { return OBROK[k % 3](REC.jedi[i]); })), out = $("rmodal") ? "button" : "a";
-      var row = ids.map(function (i) { var r = REC.jedi[i]; return "<" + out + (out === "a" ? ' href="recepti.html#r=' + i + '"' : ' type="button"') + ' data-r="' + i + '">' + ico(r[0]) + esc(en ? r[2] : r[1]) + "</" + out + ">"; }).join("");
-      t.innerHTML = '<div class="row">' + row + row + "</div>";
-      // počasi: okoli 8 px na sekundo, ne glede na dolžino traku
-      var w = t.firstChild.scrollWidth / 2; if (w) t.firstChild.style.animationDuration = Math.round(w / (k === 1 ? 7 : 8)) + "s";
-    });
+    obroki();
+  }
+  // Zajtrk, kosilo, večerja: po 4 naključne jedi, gumb »Druge jedi« pokaže nove (brez premikanja).
+  function obroki() {
+    var box = $("obroki"); if (!box) return;
+    var en = L() === "en", out = $("rmodal") ? "button" : "a";
+    var NAMES = [["Zajtrk", "Breakfast"], ["Kosilo", "Lunch"], ["Večerja", "Dinner"]];
+    box.innerHTML = NAMES.map(function (n, k) {
+      var ids = shuffle(REC.jedi.map(function (r, i) { return i; }).filter(function (i) { return OBROK[k](REC.jedi[i]); })).slice(0, 4);
+      return '<div class="ob"><h3>' + n[en ? 1 : 0] + "</h3>" + ids.map(function (i) {
+        var r = REC.jedi[i];
+        return "<" + out + (out === "a" ? ' href="recepti.html#r=' + i + '"' : ' type="button"') + ' class="obj" data-r="' + i + '"><span class="oi">' + ico(r[0]) + "</span><span><b>" + esc(en ? r[2] : r[1]) + "</b><small>" + mins(r[3]) + "</small></span></" + out + ">";
+      }).join("") + "</div>";
+    }).join("") + '<button type="button" class="ob-more" id="obMore">↻ ' + T("Druge jedi", "Other dishes") + "</button>";
+    $("obMore").onclick = obroki;
   }
   document.addEventListener("click", function (e) {
-    var b = e.target.closest && e.target.closest("#dnevni, .dtrak button[data-r]"); if (!b) return;
+    var b = e.target.closest && e.target.closest("#dnevni, .obroki button[data-r]"); if (!b) return;
     openRecipe(+(b.dataset.i || b.dataset.r));
   });
-  if ($("rflow") || document.querySelector(".dtrak")) fetch("data/recepti.json").then(function (r) { return r.json(); }).then(function (d) {
+  if ($("rflow") || $("obroki")) fetch("data/recepti.json").then(function (r) { return r.json(); }).then(function (d) {
     REC = d; recipes(); extras();
     var m = location.hash.match(/^#r=(\d+)$/); if (m) { openRecipe(+m[1]); history.replaceState(null, "", location.pathname + location.search); }
     var kh = location.hash.match(/^#kuhaj=(.+)$/); if (kh) { var mj = (store("nk-moji") || []).filter(function (x) { return x.n === decodeURIComponent(kh[1]); })[0]; cook(byName(decodeURIComponent(kh[1])), mj && mj.o); history.replaceState(null, "", location.pathname + location.search); }
