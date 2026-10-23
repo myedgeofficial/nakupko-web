@@ -61,7 +61,7 @@
     $("wlCount").textContent = open;
     $("wlIn").placeholder = T("Kaj moraš kupiti? npr. mleko", "What do you need? e.g. milk");
     $("wlActs").hidden = !list.length;
-    if (!list.length) { $("wlList").innerHTML = '<div class="empty"><i>🧺</i>' + T("Seznam je prazen. Dodaj izdelek ali izberi jed.", "Your list is empty. Add an item or pick a dish.") + "</div>"; cheap(); qr(); recipes(); pill(); return; }
+    if (!list.length) { $("wlList").innerHTML = '<div class="empty"><i>🧺</i>' + T("Seznam je prazen. Dodaj izdelek ali izberi jed.", "Your list is empty. Add an item or pick a dish.") + "</div>"; cheap(); qr(); recipes(); pill(); moji(); return; }
     var groups = {};
     list.forEach(function (x, i) { var p = find(x.n), c = p ? p[2] : "Drugo"; (groups[c] = groups[c] || []).push(i); });
     var order = CATS.concat(["Drugo"]).filter(function (c) { return groups[c]; });
@@ -72,7 +72,7 @@
       }).join("") + "</div>";
     }).join("");
     $("wlWa").href = "https://wa.me/?text=" + encodeURIComponent(text());
-    cheap(); qr(); recipes(); pill();
+    cheap(); qr(); recipes(); pill(); moji();
   }
   $("wlList").onclick = function (e) {
     var r = e.target.closest(".wrow"); if (!r) return; var i = +r.dataset.i;
@@ -222,10 +222,71 @@
   if ($("rmAdd")) $("rmAdd").onclick = function () {
     var n = 0, f = servings / 4;
     cur[6].forEach(function (g, i) { if (off[i]) return; if (add(g[0], true, scaleAmt(g[1], g[2], f))) n++; });
+    saveMoj(cur[1], servings);
     closeModal(); render();
     toast(T("Na seznam dodano: " + n + " sestavin za " + servings + (servings === 1 ? " osebo" : servings === 2 ? " osebi" : servings < 5 ? " osebe" : " oseb"), "Added " + n + " ingredients for " + servings));
     var pl = $("lpill"); if (pl) { pl.classList.remove("bump"); void pl.offsetWidth; pl.classList.add("bump"); }
   };
+  // ---------- kuhanje po korakih ----------
+  // »Moji recepti«: jedi, ki si jih dal na seznam. Po nakupu jih najdeš nad seznamom in kuhaš po korakih.
+  function saveMoj(name, os) {
+    var m = (store("nk-moji") || []).filter(function (x) { return x.n !== name; });
+    m.unshift({ n: name, o: os, t: Date.now() }); store("nk-moji", m.slice(0, 6));
+  }
+  function moji() {
+    var box = $("wlMoji"); if (!box) return;
+    var m = (store("nk-moji") || []).filter(function (x) { return !REC || byName(x.n) >= 0; });
+    box.hidden = !m.length; if (!m.length) return;
+    box.innerHTML = '<span class="mk">' + T("Tvoji recepti", "Your recipes") + "</span>" + m.map(function (x, k) {
+      var r = REC && REC.jedi[byName(x.n)], nm = r ? (L() === "en" ? r[2] : r[1]) : x.n;
+      return '<span class="mj" role="button" tabindex="0" data-k="' + k + '">' + esc(nm) + "<b>" + T("Kuhaj ›", "Cook ›") + '</b><button type="button" class="mx" data-x="' + k + '" aria-label="' + T("Odstrani", "Remove") + '">×</button></span>';
+    }).join("");
+  }
+  function byName(n) { if (!REC) return -1; for (var i = 0; i < REC.jedi.length; i++) if (REC.jedi[i][1] === n) return i; return -1; }
+  if ($("wlMoji")) $("wlMoji").onclick = function (e) {
+    var m = store("nk-moji") || [], x = e.target.closest("[data-x]");
+    if (x) { m.splice(+x.dataset.x, 1); store("nk-moji", m); moji(); return; }
+    var c = e.target.closest("[data-k]"); if (!c) return; var it = m[+c.dataset.k];
+    if ($("kuhaj")) cook(byName(it.n), it.o); else location.href = "recepti.html#kuhaj=" + encodeURIComponent(it.n);
+  };
+  var ck = null, ckStep = 0, ckOs = 4, wake = null;
+  function cook(i, os) {
+    if (!$("kuhaj") || !REC || !REC.jedi[i]) return;
+    ck = REC.jedi[i]; ckStep = 0; ckOs = os || servings;
+    closeModal(); $("kuhaj").hidden = false; document.body.style.overflow = "hidden";
+    // zaslon naj med kuhanjem ne ugasne
+    try { if (navigator.wakeLock) navigator.wakeLock.request("screen").then(function (w) { wake = w; }).catch(function () {}); } catch (e) {}
+    drawCook();
+  }
+  function drawCook() {
+    var en = L() === "en", st = ck[7][en ? 1 : 0], n = st.length, fin = ckStep >= n, f = ckOs / 4;
+    $("khName").textContent = en ? ck[2] : ck[1];
+    $("khCnt").textContent = fin ? "✓" : (ckStep + 1) + " / " + n;
+    $("khBar").style.width = (fin ? 100 : (ckStep + 1) / n * 100) + "%";
+    $("khK").textContent = fin ? "" : T("Korak " + (ckStep + 1) + " od " + n, "Step " + (ckStep + 1) + " of " + n);
+    $("khStep").textContent = fin ? T("Dober tek!", "Enjoy your meal!") : st[ckStep];
+    $("khStep").classList.toggle("fin", fin);
+    $("khOs").textContent = "(" + ckOs + (en ? (ckOs === 1 ? " person" : " people") : (ckOs === 1 ? " oseba" : ckOs === 2 ? " osebi" : ckOs < 5 ? " osebe" : " oseb")) + ")";
+    $("khIng").innerHTML = ck[6].map(function (g) { var a = scaleAmt(g[1], g[2], f), m = {}; if (a) m[a[1]] = a[0]; return "<p>" + esc(nameOf(g[0])) + "<span>" + (a ? esc(fmtAmt(m)) : T("po okusu", "to taste")) + "</span></p>"; }).join("");
+    $("khPrev").disabled = ckStep === 0;
+    $("khNext").textContent = fin ? T("Končano ✓", "Done ✓") : ckStep === n - 1 ? T("Zadnji korak ✓", "Last step ✓") : T("Naprej ›", "Next ›");
+  }
+  function closeCook() { $("kuhaj").hidden = true; document.body.style.overflow = ""; if (wake) { wake.release().catch(function () {}); wake = null; } }
+  function cookMove(d) {
+    var n = ck[7][0].length;
+    if (d > 0 && ckStep >= n) { store("nk-moji", (store("nk-moji") || []).filter(function (x) { return x.n !== ck[1]; })); moji(); closeCook(); return; }
+    ckStep = Math.max(0, Math.min(n, ckStep + d)); drawCook();
+  }
+  if ($("kuhaj")) {
+    $("khX").onclick = closeCook;
+    $("khPrev").onclick = function () { cookMove(-1); };
+    $("khNext").onclick = function () { cookMove(1); };
+    $("rmCook").onclick = function () { cook(REC.jedi.indexOf(cur), servings); };
+    addEventListener("keydown", function (e) { if ($("kuhaj").hidden) return; if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); cookMove(1); } else if (e.key === "ArrowLeft") cookMove(-1); else if (e.key === "Escape") closeCook(); });
+    var sx = null;
+    $("kuhaj").addEventListener("touchstart", function (e) { sx = e.touches[0].clientX; }, { passive: true });
+    $("kuhaj").addEventListener("touchend", function (e) { if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; sx = null; if (Math.abs(dx) > 60) cookMove(dx < 0 ? 1 : -1); });
+  }
   function openRecipe(i) { if (!$("rmodal") || !REC || !REC.jedi[i]) return; cur = REC.jedi[i]; off = {}; drawModal(); $("rmodal").hidden = false; document.body.style.overflow = "hidden"; }
   // trakovi: zgoraj zajtrki, v sredini kosila, spodaj večerje; vrstni red je vsakič naključen
   var ZAJTRK_SLADKO = ["Palačinke", "Mlečni riž s cimetom", "Francoski rogljički doma", "Bananin kruh", "Vaflji", "Domači kruh", "Sadna solata", "Ocvrte miške", "Kruh z ajdovo moko"];
@@ -261,6 +322,8 @@
   if ($("rflow") || document.querySelector(".dtrak")) fetch("data/recepti.json").then(function (r) { return r.json(); }).then(function (d) {
     REC = d; recipes(); extras();
     var m = location.hash.match(/^#r=(\d+)$/); if (m) { openRecipe(+m[1]); history.replaceState(null, "", location.pathname + location.search); }
+    var kh = location.hash.match(/^#kuhaj=(.+)$/); if (kh) { var mj = (store("nk-moji") || []).filter(function (x) { return x.n === decodeURIComponent(kh[1]); })[0]; cook(byName(decodeURIComponent(kh[1])), mj && mj.o); history.replaceState(null, "", location.pathname + location.search); }
+    moji();
   });
 
   // plavajoča košarica na telefonu
@@ -429,7 +492,7 @@
     render();
   });
   var fromLink = false;
-  function all() { recipes(); render(); today(); showNear(); if ($("rmodal") && !$("rmodal").hidden) drawModal(); if (REC) extras(); }
+  function all() { recipes(); render(); today(); showNear(); if ($("rmodal") && !$("rmodal").hidden) drawModal(); if ($("kuhaj") && !$("kuhaj").hidden) drawCook(); if (REC) extras(); }
   new MutationObserver(all).observe(root, { attributes: true, attributeFilter: ["lang"] });
   recipes(); today();
 })();
