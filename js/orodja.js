@@ -178,7 +178,7 @@
     } else if (!rm) {
       h += step(T("Korak 3 od 3", "Step 3 of 3"), T("Na kaj imaš danes apetit?", "What are you in the mood for?"), '<div class="rfold">' + REC.mape.map(function (m, k) {
         var ids = pool(rt, rd, m[0]); if (!ids.length) return "";
-        var seen = {}, ics = ids.map(function (i) { return REC.jedi[i][0]; }).filter(function (x) { return seen[x] ? false : (seen[x] = 1); }).slice(0, 3);
+        var ics = (window.IKONE_MAP || {})[m[0]] || [];
         return '<button type="button" class="rf" data-m="' + m[0] + '" style="animation-delay:' + k * .04 + 's"><span class="ics">' + ics.map(ico).join("") + "</span><b>" + esc(en ? m[2] : m[1]) + "</b><span>" + ids.length + T(ids.length === 1 ? " jed" : " jedi", ids.length === 1 ? " dish" : " dishes") + "</span></button>";
       }).join("") + "</div>");
     } else {
