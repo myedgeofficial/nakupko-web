@@ -133,7 +133,7 @@
     ["t90", 46, 90, "Do ure in pol", "Up to 1½ hours", "Ko imaš malo več časa", "When you have a bit more time"],
     ["tvec", 91, 9999, "Več kot ura in pol", "Over 1½ hours", "Za vikend in praznike", "For weekends and holidays"]];
   var TEZ = [[1, "Enostavno", "Easy", "Zmore vsak", "Anyone can do it"], [2, "Srednje", "Medium", "Nekaj izkušenj", "Some experience"], [3, "Zahtevno", "Challenging", "Za prave kuharje", "For real cooks"]];
-  function icoKat(k) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ((window.IKONE_KAT || {})[k] || "") + "</svg>"; }
+  function icoKat(k) { return '<i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ((window.IKONE_KAT || {})[k] || "") + "</svg></i>"; }
   function ico(k) { return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ((window.IKONE_JEDI || {})[k] || "") + "</svg>"; }
   function mins(m) { if (m < 60) return m + " min"; var h = Math.floor(m / 60), r = m % 60; return h + " h" + (r ? " " + r + " min" : ""); }
   function dots(n) { return '<span class="dots">' + [1, 2, 3].map(function (i) { return '<i class="' + (i <= n ? "on" : "") + '"></i>'; }).join("") + "</span>"; }
@@ -180,7 +180,7 @@
       h += step(T("Korak 3 od 3", "Step 3 of 3"), T("Na kaj imaš danes apetit?", "What are you in the mood for?"), '<div class="rfold">' + REC.mape.map(function (m, k) {
         var ids = pool(rt, rd, m[0]); if (!ids.length) return "";
         var ics = (window.IKONE_MAP || {})[m[0]] || [];
-        return '<button type="button" class="rf" data-m="' + m[0] + '" style="animation-delay:' + k * .04 + 's"><span class="ics">' + ics.map(icoKat).join("") + "</span><b>" + esc(en ? m[2] : m[1]) + "</b><span>" + ids.length + T(ids.length === 1 ? " jed" : " jedi", ids.length === 1 ? " dish" : " dishes") + "</span></button>";
+        return '<button type="button" class="rf" data-m="' + m[0] + '" style="animation-delay:' + k * .04 + 's"><span class="ics" style="--kc:' + ((window.IKONE_BARVE || {})[m[0]] || [""])[0] + '">' + ics.map(icoKat).join("") + "</span><b>" + esc(en ? m[2] : m[1]) + "</b><span>" + ids.length + T(ids.length === 1 ? " jed" : " jedi", ids.length === 1 ? " dish" : " dishes") + "</span></button>";
       }).join("") + "</div>");
     } else {
       var mm = REC.mape.filter(function (m) { return m[0] === rm; })[0];
